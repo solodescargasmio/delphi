@@ -1,0 +1,9 @@
+inherited frConsultarMaterial: TfrConsultarMaterial
+  Caption = 'Consulta Materiales Utilizados'
+  FormStyle = fsMDIChild
+  Visible = True
+  ExplicitWidth = 547
+  ExplicitHeight = 535
+  PixelsPerInch = 96
+  TextHeight = 13
+end

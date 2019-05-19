@@ -1,0 +1,39 @@
+unit udm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
+  FireDAC.Phys.MySQLDef, Data.DB, FireDAC.Comp.Client, FireDAC.Stan.Param,
+  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.VCLUI.Wait, FireDAC.Comp.UI;
+
+type
+  Tcx = class(TFDConnection)
+    cbdMysql: TFDConnection;
+    cbdSQLite: TFDConnection;
+    FDQuery1: TFDQuery;
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    Mysql: TFDConnection;
+    FDCommand1: TFDCommand;
+    FDCommand2: TFDCommand;
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  cx: Tcx;
+
+implementation
+
+{$R *.dfm}
+
+
+
+end.

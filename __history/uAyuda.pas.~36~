@@ -1,0 +1,275 @@
+unit uAyuda;
+
+interface
+uses udm,System.SysUtils, FireDAC.Comp.Client,
+Vcl.ExtCtrls,Vcl.StdCtrls,uMensage, uAyuda_Cliente, uAyuda_Vehiculo,
+  uAyuda_Tarea;
+
+ function CIconSimbolos(ci:String):String;
+ function CISoloNumero(ci:String):Integer;
+ function ProxID(tabla : String):Integer;
+ function ValDato(ed :TLabeledEdit):Boolean;overload;
+ function ValDato(ed :TEdit):Boolean;overload;
+ function qrOpen(qr:TFDQuery; ed :TLabeledEdit):Boolean;overload;
+ function qrOpen(qr:TFDQuery; ed :TLabeledEdit;lOk:Boolean):Boolean;overload;
+ procedure Ayuda(tabla:string;ed :TLabeledEdit);
+ procedure InvocarAyuda(tabla:string;ed : TLabeledEdit);
+ procedure AyudaCliente(ed : TLabeledEdit);
+ procedure AyudaVehiculo(ed : TLabeledEdit);
+ procedure AyudaTarea(ed : TLabeledEdit);
+ procedure AyudaMedida(ed : TLabeledEdit);
+ procedure AyudaMaterial(ed : TLabeledEdit);
+ //function qrOpen(qr:TFDQuery; ed :TEdit):Boolean;
+implementation
+
+
+
+procedure Ayuda(tabla:String;ed : TLabeledEdit);
+begin
+
+   InvocarAyuda(tabla,ed);
+
+end;
+
+
+function CIconSimbolos(ci:String):String;
+var
+  cedula : String;
+
+begin
+
+ if (ci<>'') and (Length(ci)=8) then
+ begin
+   cedula := Copy(ci,1,1);
+   cedula := cedula+'.'+Copy(ci,2,3);
+   cedula := cedula+'.'+Copy(ci,5,3);
+   cedula := cedula+'-'+Copy(ci,8,Length(ci));
+ end;
+   Result := cedula;
+end;
+
+
+function CISoloNumero(ci:String):Integer;
+var
+  cedula,po : Integer;
+  cad : String;
+
+begin
+
+ if ci<>'' then
+ begin
+   cad := Copy(ci,1,1);
+   cad := cad+Copy(ci,3,3);
+   cad := cad+Copy(ci,7,3);
+   cad := cad+Copy(ci,11,Length(ci));
+   try
+    cedula := StrToInt(cad);
+
+   except on E: Exception do
+   end;
+ end;
+   Result := cedula;
+end;
+
+function ProxID(tabla : String):Integer;
+var
+  nId : Integer;
+begin
+  with udm.con.FDQuery1 do
+  begin
+    SQL.Clear;
+    SQL.Text := 'select max(id) as id from '+tabla+';';
+    Open;
+  end;
+  if udm.con.FDQuery1.FieldByName('id').IsNull  then
+    nId := 1
+  else
+    nId := udm.con.FDQuery1.FieldByName('id').AsInteger + 1;
+
+  Result := nId;
+
+end;
+
+function qrOpen(qr:TFDQuery; ed :TLabeledEdit):Boolean;overload;
+var
+  lOk : Boolean;
+begin
+  if ed.Text='' then
+  begin
+   lOk:=False;
+  end
+  else
+    lOk:=True;
+
+  Result := qrOpen(qr,ed,lOk);
+
+end;
+
+function qrOpen(qr:TFDQuery; ed :TLabeledEdit;lOk:Boolean):Boolean;overload;
+
+begin
+  if lOk then
+  begin
+    with qr do
+    begin
+      Close;
+      ParamByName('paId').Value := StrToInt(ed.Text);
+      Open;
+    end;
+    if qr.IsEmpty then
+      lOk := False;
+  end;
+
+  Result := lOk;
+end;
+
+ function ValDato(ed :TLabeledEdit):Boolean;overload;
+var
+  lOk : Boolean;
+
+begin
+
+ if ed.Text<>'' then
+ begin
+   lOk:=True
+ end
+ else
+ begin
+   lOk:=False;
+   ed.SetFocus;
+ end;
+
+   Result := lOk;
+end;
+
+ function ValDato(ed :TEdit):Boolean;overload;
+var
+  lOk : Boolean;
+
+begin
+
+ if ed.Text<>'' then
+ begin
+   lOk:=True
+ end
+ else
+ begin
+   lOk:=False;
+   ed.SetFocus;
+ end;
+
+   Result := lOk;
+end;
+
+procedure InvocarAyuda(tabla:String;ed : TLabeledEdit);
+var
+  tab : String;
+
+begin
+  tab:=UpperCase(tabla);
+  if tab='CLIENTE' then
+  begin
+    AyudaCliente(ed);
+  end
+  else if tab='VEHICULO' then
+  begin
+    AyudaVehiculo(ed);
+  end
+  else if tab='TAREA' then
+  begin
+    AyudaTarea(ed);
+  end
+  else if tab='MEDIDA' then
+  begin
+    AyudaTarea(ed);
+  end
+  else if tab='MATERIAL' then
+  begin
+    AyudaTarea(ed);
+  end;
+
+
+end;
+
+procedure AyudaCliente(ed : TLabeledEdit);
+var
+  i:Integer;
+  f : TfrAyuda_Cliente;
+
+begin
+
+  uCodigoAyuda:=0;
+
+  f := TfrAyuda_Cliente.Create(nil);
+  f.ShowModal;
+  ed.Text := IntToStr(uCodigoAyuda);
+  f.Close;
+
+end;
+
+procedure AyudaVehiculo(ed : TLabeledEdit);
+var
+  i:Integer;
+  f : TfrAyuda_Vehiculo;
+
+begin
+
+  uCodigoAyuda:=0;
+
+  f := TfrAyuda_Vehiculo.Create(nil);
+  f.ShowModal;
+  ed.Text := IntToStr(uCodigoAyuda);
+  f.Close;
+
+end;
+
+procedure AyudaTarea(ed : TLabeledEdit);
+var
+  i:Integer;
+  f : TfrAyuda_tarea;
+
+begin
+
+  uCodigoAyuda:=0;
+
+  f := TfrAyuda_tarea.Create(nil);
+  f.ShowModal;
+  ed.Text := IntToStr(uCodigoAyuda);
+  f.Close;
+
+end;
+
+procedure AyudaMedida(ed : TLabeledEdit);
+var
+  i:Integer;
+  f : TfrAyuda_tarea;
+
+begin
+
+  uCodigoAyuda:=0;
+
+  f := TfrAyuda_tarea.Create(nil);
+  f.ShowModal;
+  ed.Text := IntToStr(uCodigoAyuda);
+  f.Close;
+
+end;
+
+procedure AyudaMaterial(ed : TLabeledEdit);
+var
+  i:Integer;
+  f : TfrAyuda_tarea;
+
+begin
+
+  uCodigoAyuda:=0;
+
+  f := TfrAyuda_tarea.Create(nil);
+  f.ShowModal;
+  ed.Text := IntToStr(uCodigoAyuda);
+  f.Close;
+
+end;
+
+
+end.

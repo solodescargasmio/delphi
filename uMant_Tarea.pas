@@ -1,0 +1,886 @@
+unit uMant_Tarea;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uBase_Mantenimiento, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  Datasnap.Provider, Datasnap.DBClient, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Mask, Vcl.ExtCtrls,
+  Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, System.ImageList, Vcl.ImgList,
+  Vcl.ExtDlgs,System.IOUtils,System.Types;
+
+type
+  TfrMant_Tarea = class(TfrBase_Mantenimiento)
+    edVehiculo: TLabeledEdit;
+    txNom: TDBText;
+    txDir: TDBText;
+    txTel: TDBText;
+    FDQuery1Vehiculo: TStringField;
+    FDQuery1Cliente: TStringField;
+    meDescripcion: TMemo;
+    meComentario: TMemo;
+    DBGrid1: TDBGrid;
+    Label1: TLabel;
+    Label3: TLabel;
+    Label2: TLabel;
+    suMaterial: TDataSource;
+    Label4: TLabel;
+    Label6: TLabel;
+    Label5: TLabel;
+    qrCodigoid: TFDAutoIncField;
+    qrCodigoidVehiculo: TIntegerField;
+    qrCodigoDescripcion: TStringField;
+    qrCodigoComentario: TStringField;
+    qrCodigoiniTarea: TDateField;
+    suPres: TDataSource;
+    DBGrid2: TDBGrid;
+    FDQuery1id: TFDAutoIncField;
+    chCerrar: TCheckBox;
+    qrPresupuesto: TFDQuery;
+    qrPresupuestoidTarea: TIntegerField;
+    qrPresupuestodetalle: TStringField;
+    qrMaterial: TFDQuery;
+    edPresupuesto: TDBEdit;
+    clImporte: TClientDataSet;
+    clImporteImporte: TFloatField;
+    suImporte: TDataSource;
+    Label7: TLabel;
+    clPresupuesto: TClientDataSet;
+    clPresupuestoDetalle: TStringField;
+    clPresupuestoImporte: TFloatField;
+    clPresupuestoTotal: TAggregateField;
+    pnImagenes: TPanel;
+    btnGuardarImagen: TButton;
+    OpenPictureDialog1: TOpenPictureDialog;
+    imgPrincipal: TImage;
+    btnBuscarImagen: TButton;
+    edNomImagen: TLabeledEdit;
+    ImageList1: TImageList;
+    imgLista: TImage;
+    btnAnt: TButton;
+    btnSig: TButton;
+    btnImgSalir: TButton;
+    btnAgrImagen: TButton;
+    qrImagen: TFDQuery;
+    edImg: TEdit;
+    btnElimImagen: TButton;
+    qrMedida: TFDQuery;
+    suMedida: TDataSource;
+    qrMedidaid: TIntegerField;
+    qrMedidaNombre: TStringField;
+    qrMedidaSimbolo: TStringField;
+    FDQuery2: TFDQuery;
+    FDQuery2id: TIntegerField;
+    FDQuery2Nombre: TStringField;
+    FDQuery2idMedida: TIntegerField;
+    pnMaterial: TPanel;
+    edCantidad: TLabeledEdit;
+    cbMaterial: TComboBox;
+    Label8: TLabel;
+    txMedida: TDBText;
+    btnAgrMedida: TButton;
+    clMaterial: TClientDataSet;
+    clMaterialMaterial: TStringField;
+    clMaterialCantidad: TFloatField;
+    clMaterialMedida: TStringField;
+    clMaterialidMaterial: TIntegerField;
+    Panel1: TPanel;
+    qrCodigoPresupuesto: TBCDField;
+    qrPresupuestoImporte: TBCDField;
+    qrMaterialidTarea: TIntegerField;
+    qrMaterialidMaterial: TIntegerField;
+    qrMaterialCantidad: TBCDField;
+    qrImagenidTarea: TIntegerField;
+    qrImagenDireccion: TStringField;
+    qrImagenNombre: TStringField;
+    procedure edVehiculoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure edCodigoKeyPress(Sender: TObject; var Key: Char);
+    procedure edCodigoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure edVehiculoKeyPress(Sender: TObject; var Key: Char);
+    procedure qrCodigoAfterOpen(DataSet: TDataSet);
+    procedure btnActualizarClick(Sender: TObject);
+    procedure meDescripcionKeyPress(Sender: TObject; var Key: Char);
+    procedure DateTimePicker1KeyPress(Sender: TObject; var Key: Char);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure Habilitar(lOk:Boolean);
+    procedure btnAgrImagenClick(Sender: TObject);
+    procedure btnImgSalirClick(Sender: TObject);
+    procedure btnBuscarImagenClick(Sender: TObject);
+    procedure btnGuardarImagenClick(Sender: TObject);
+    procedure btnSigClick(Sender: TObject);
+    procedure btnAntClick(Sender: TObject);
+    procedure btnElimImagenClick(Sender: TObject);
+    procedure cbMaterialSelect(Sender: TObject);
+    procedure btnAgrMedidaClick(Sender: TObject);
+    procedure edVehiculoMouseEnter(Sender: TObject);
+
+    procedure edVehiculoMouseLeave(Sender: TObject);
+    procedure edVehiculoChange(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+  
+
+  private
+    { Private declarations }
+    procedure IniPant;
+    procedure CargarCliente;
+    procedure ListarImagen;
+    procedure CargarImagenLista(imagen:Integer);
+    procedure LlenarCombo;
+
+  public
+    { Public declarations }
+  end;
+
+var
+  frMant_Tarea: TfrMant_Tarea;
+  Files : TStringDynArray;
+  indice : Integer;
+  Dire : String;
+
+implementation
+
+{$R *.dfm}
+
+uses udm,uAyuda,uMensage, Jpeg;
+
+procedure TfrMant_Tarea.btnActualizarClick(Sender: TObject);
+var
+  lOk : Boolean;
+  nId : Integer;
+
+begin
+  inherited;
+
+  if clPresupuesto.RecordCount>0 then
+  begin
+    lOk:=True;
+  end
+  else
+  begin
+    MsgAviso('INGRESAR DETALLES DE PRESUPUESTO');
+    DBGrid2.SetFocus;
+  end;
+
+
+  if lOk then
+  begin
+    Screen.Cursor := crHourGlass;
+    TRY
+      udm.con.MySQL.StartTransaction;
+      TRY
+
+
+        with udm.con.FDCommand1 do
+        begin
+          if qrCodigo.IsEmpty then
+          begin
+            nId := ProxId('tarea');
+            CommandText.Text := 'Insert tarea ' +
+                                '(id,idVehiculo,Descripcion,Comentario,'+
+                                'Presupuesto,iniTarea) ' +
+                                'Values ' +
+                                '(:paId,:paIdV,:paDes,:paCom,:paPre,'+
+                                ':paIniT)';
+          end
+          else
+          begin
+            nId := qrCodigoid.AsInteger;
+            CommandText.Text := 'Update tarea ' +
+                                'Set idVehiculo = :paIdV, ' +
+                                '    Descripcion  = :paDes, ' +
+                                '    Comentario = :paCom,  ' +
+                                '    Presupuesto = :paPre,  ' +
+                                '    iniTarea = :paIniT ' +
+                                'Where id = :paId';
+          end;
+
+          ParamByName('paId').Value := nId;
+          ParamByName('paIdV').Value := FDQuery1id.AsInteger;
+          ParamByName('paDes').Value := meDescripcion.Text;
+          ParamByName('paCom').Value := meComentario.Text;
+          ParamByName('paPre').Value := clPresupuestoTotal.AsString;
+          if DateTimePicker1.Checked then
+             ParamByName('paIniT').Value := DateTimePicker1.DateTime
+          else
+             ParamByName('paIniT').Value := Now;
+
+          Execute;
+
+          CommandText.Text:='delete from detalle_presupuesto '+
+                            ' where idTarea = :paId';
+          ParamByName('paId').Value := nId;
+          Execute;
+          CommandText.Text:='delete from materiales '+
+                            ' where idTarea = :paId';
+          ParamByName('paId').Value := nId;
+          Execute;
+
+          CommandText.Text:='insert into detalle_presupuesto '+
+                            '(idTarea,detalle,Importe)'+
+                            'Values '+
+                            '(:paId,:paDet,:paImp)';
+
+
+          with clPresupuesto do
+          begin
+            First;
+            while not Eof do
+            begin
+              if clPresupuestoDetalle.AsString<>'' then
+              begin;
+                udm.con.FDCommand1.ParamByName('paId').Value := nId;
+                udm.con.FDCommand1.ParamByName('paDet').Value := clPresupuestoDetalle.AsString;
+                udm.con.FDCommand1.ParamByName('paImp').Value := clPresupuestoImporte.AsFloat;
+                udm.con.FDCommand1.Execute;
+              end;
+                Next;
+            end;
+
+          end;
+          CommandText.Text:='insert into materiales '+
+                            '(idTarea,idMaterial,Cantidad)'+
+                            'Values '+
+                            '(:paId,:paMat,:paCan)';
+          with clMaterial do
+          begin
+            First;
+            while not Eof do
+            begin
+              udm.con.FDCommand1.ParamByName('paId').Value := nId;
+              udm.con.FDCommand1.ParamByName('paMat').Value := clMaterialidMaterial.AsInteger;
+              udm.con.FDCommand1.ParamByName('paCan').Value := clMaterialCantidad.AsFloat;
+              udm.con.FDCommand1.Execute;
+              Next;
+            end;
+          end;
+
+
+
+        end;
+        udm.con.MySQL.Commit;
+        MsgAviso('TAREA REGISTRADA CON ID '+IntToStr(nId));
+        IniPant;
+        HabMant(False);
+      EXCEPT
+        On E:Exception do
+        begin
+          udm.con.MySQL.Rollback;
+          MsgError('NO SE PUDO GUARDAR LA TAREA.'+E.Message);
+        end;
+      END;
+    FINALLY
+      Screen.Cursor := crDefault;
+    END;
+
+  end;
+
+end;
+
+procedure TfrMant_Tarea.btnCancelarClick(Sender: TObject);
+begin
+  inherited;
+
+  IniPant;
+
+end;
+
+procedure TfrMant_Tarea.btnElimImagenClick(Sender: TObject);
+var
+  lOk : Boolean;
+
+begin
+  inherited;
+
+  if MsgConfirmacion('SEGURO DESEA ELIMINAR LA IMAGEN ?') then
+  begin
+     try
+        Screen.Cursor := crHourGlass;
+        if FileExists(Dire) then
+           DeleteFile(Dire);
+
+        try
+          with udm.con.FDCommand1 do
+          begin
+            CommandText.Text := 'Delete from imagen_tarea '+
+                                 'where Nombre=:paNom';
+            ParamByName('paNom').Value := edImg.Text;
+            Execute;
+          end;
+            udm.con.Mysql.Commit;
+            MsgAviso('IMAGEN ELIMINADA CON EXITO');
+            ListarImagen;
+        except on E: Exception do
+            MsgError('NO SE PUDO ELIMINAR LA IMAGEN '+#10+E.Message);
+        end;
+      finally
+        Screen.Cursor := crDefault;
+      end;
+  end;
+
+
+
+
+
+end;
+
+procedure TfrMant_Tarea.btnGuardarImagenClick(Sender: TObject);
+var
+  sId,dir : String;
+
+begin
+  inherited;
+
+
+
+  sId:=qrCodigoid.AsString;
+  dir:='C:\Aplicacion\Imagen\'+sId;
+  if sId<>'' then
+  begin
+    if not DirectoryExists(dir) then
+      ForceDirectories(dir);
+
+      try
+        Screen.Cursor := crHourGlass;
+        udm.con.Mysql.StartTransaction;
+
+        imgPrincipal.Picture.SaveToFile(dir+'\'+edNomImagen.Text);
+        imgPrincipal.Picture.Graphic:=nil;
+
+
+
+        try
+          with udm.con.FDCommand1 do
+          begin
+            CommandText.Text := 'insert into imagen_tarea '+
+                                '(idTarea,Direccion,Nombre)'+
+                                'Value '+
+                                '(:paIdT,:paDir,:paNom)';
+
+            ParamByName('paIdT').Value := qrCodigoid.AsInteger;
+            ParamByName('paDir').Value := dir;
+            ParamByName('paNom').Value := edNomImagen.Text;
+            Execute;
+          end;
+            udm.con.Mysql.Commit;
+            MsgAviso('IMAGEN REGISTRADA CON EXITO');
+            ListarImagen;
+        except on E: Exception do
+            MsgError('NO SE PUDO REGISTRAR LA IMAGEN '+#10+E.Message);
+        end;
+      finally
+        Screen.Cursor := crDefault;
+      end;
+      edNomImagen.Clear;
+
+  end;
+
+
+
+end;
+
+procedure TfrMant_Tarea.btnImgSalirClick(Sender: TObject);
+begin
+  inherited;
+
+  Habilitar(True);
+
+end;
+
+procedure TfrMant_Tarea.btnAgrImagenClick(Sender: TObject);
+begin
+  inherited;
+
+  Habilitar(False);
+
+end;
+
+procedure TfrMant_Tarea.btnAgrMedidaClick(Sender: TObject);
+var
+  lOk : Boolean;
+begin
+  inherited;
+
+  if cbMaterial.Text<>'' then
+  begin
+    lOk:=ValDato(edCantidad);
+      if lOk then
+      begin
+        if clMaterial.Locate('Material',cbMaterial.Text,[]) then
+          MsgAviso('EL MATERIAL YA ESTA AGREGADO')
+        else
+        with clMaterial do
+        begin
+          Open;
+          Insert;
+          clMaterialMaterial.Value := cbMaterial.Text;
+          clMaterialCantidad.Value := StrToFloat(edCantidad.Text);
+          clMaterialMedida.Value := qrMedidaSimbolo.AsString;
+          FDQuery2.Locate('Nombre',cbMaterial.Text,[]);
+          clMaterialidMaterial.Value := FDQuery2id.AsInteger;
+          Post;
+        end;
+        edCantidad.Clear;
+        qrMedida.Close;
+        cbMaterial.ItemIndex:=0;
+      end
+      else
+      begin
+        MsgAviso('INGRESAR CANTIDAD DE MATERIAL');
+        edCantidad.SetFocus;
+      end;
+  end;
+
+
+
+
+end;
+
+procedure TfrMant_Tarea.btnBuscarImagenClick(Sender: TObject);
+begin
+  inherited;
+
+  if OpenPictureDialog1.Execute then
+  begin
+    edNomImagen.Text :=ExtractFileName(OpenPictureDialog1.FileName);
+    imgPrincipal.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+  end;
+
+end;
+
+procedure TfrMant_Tarea.CargarCliente;
+var
+  nId:Integer;
+  total:Double;
+
+begin
+
+  if not qrPresupuesto.IsEmpty then
+  begin
+    with clPresupuesto do
+    begin
+      Close;
+      CreateDataSet;
+      while not qrPresupuesto.Eof do
+      begin
+        Append;
+        clPresupuestoDetalle.Value := qrPresupuestodetalle.AsString;
+        clPresupuestoImporte.Value := qrPresupuestoImporte.AsFloat;
+        qrPresupuesto.Next;
+      end;
+
+      Post;
+    end;
+    clPresupuesto.Active;
+  end;
+
+  FDQuery2.Close;
+  FDQuery2.Open;
+
+   if not qrMaterial.IsEmpty then
+  begin
+    with clMaterial do
+    begin
+      Close;
+      CreateDataSet;
+      while not qrMaterial.Eof do
+      begin
+        Append;
+        FDQuery2.Locate('id',qrMaterialidMaterial.AsInteger,[]);
+        clMaterialidMaterial.Value := qrMaterialidMaterial.AsInteger;
+        clMaterialMaterial.Value := FDQuery2Nombre.AsString;
+        clMaterialCantidad.Value := qrMaterialCantidad.AsFloat;
+        qrMedida.Close;
+        qrMedida.ParamByName('paId').Value:=FDQuery2idMedida.AsInteger;
+        qrMedida.Open;
+        clMaterialMedida.Value := qrMedidaSimbolo.AsString;
+        qrMaterial.Next;
+      end;
+      Post;
+    end;
+    clMaterial.Active;
+  end;
+
+end;
+
+procedure TfrMant_Tarea.btnSigClick(Sender: TObject);
+begin
+  inherited;
+
+  if Length(Files)>=indice+2 then
+  begin
+    indice := indice+1;
+    CargarImagenLista(indice);
+  end;
+
+end;
+
+procedure TfrMant_Tarea.btnAntClick(Sender: TObject);
+begin
+  inherited;
+
+  if (Length(Files)>=indice-1) and (indice>0) then
+  begin
+    indice := indice-1;
+    CargarImagenLista(indice);
+  end;
+
+end;
+
+
+procedure TfrMant_Tarea.CargarImagenLista(imagen: Integer);
+var
+  nomb : String;
+
+begin
+
+   Dire:=Files[imagen];
+   nomb := ExtractFileName(Files[imagen]);
+   edImg.Text := nomb;
+  imgLista.Picture.LoadFromFile(Files[imagen]);
+  if Length(Files)>imagen then
+  begin
+    btnSig.Enabled := True;
+  end
+  else
+    btnSig.Enabled := False;
+
+  if imagen>0 then
+    btnAnt.Enabled := True;
+
+
+end;
+
+
+procedure TfrMant_Tarea.cbMaterialSelect(Sender: TObject);
+var
+  sDat:String;
+  nVal:Integer;
+
+begin
+  FDQuery2.Close;
+  FDQuery2.Open;
+   sDat:=Trim(cbMaterial.Text);
+  if sDat<>'' then
+  begin
+    FDQuery2.Locate('Nombre',sDat,[]);
+    with qrMedida do
+    begin
+      nVal:=FDQuery2idMedida.AsInteger;
+      Close;
+      ParamByName('paId').Value := nVal;
+      Open;
+    end;
+    edCantidad.SetFocus;
+  end;
+
+end;
+
+procedure TfrMant_Tarea.DateTimePicker1KeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+
+  if key=#13 then
+    meComentario.SetFocus;
+
+end;
+
+
+procedure TfrMant_Tarea.DBGrid1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  sMaterial:String;
+begin
+  inherited;
+
+  if key=46 then
+  begin
+    sMaterial:=DBGrid1.DataSource.DataSet.FieldByName('Material').Value;
+    clMaterial.Locate('Material',sMaterial,[]);
+    clMaterial.Delete;
+  end;
+
+
+
+end;
+
+procedure TfrMant_Tarea.edCodigoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+
+  if key=112 then
+    Ayuda('tarea',edCodigo);
+
+end;
+
+procedure TfrMant_Tarea.edCodigoKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+
+
+   if key=#13 then
+  begin
+    if edCodigo.Text<>'' then
+    begin
+      if qrOpen(qrCodigo,edCodigo) then
+      begin
+        HabMant(True);
+        edVehiculo.SetFocus;
+      end
+      else
+      begin
+        MsgError('CODIGO NO REGISTRADO');
+        Abort;
+      end;
+    end
+    else
+    begin
+      HabMant(True);
+      edVehiculo.SetFocus;
+    end;
+    LlenarCombo;
+
+  end;
+
+end;
+
+
+
+procedure TfrMant_Tarea.edVehiculoChange(Sender: TObject);
+begin
+  inherited;
+     FDQuery1.Close;
+end;
+
+procedure TfrMant_Tarea.edVehiculoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+
+  if key=112 then
+    Ayuda('vehiculo',edVehiculo);
+
+
+end;
+
+procedure TfrMant_Tarea.edVehiculoKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+
+  if key=#13 then
+  begin
+    if edVehiculo.Text<>'' then
+    begin
+      with FDQuery1 do
+      begin
+        Close;
+        ParamByName('paId').Value := StrToInt(edVehiculo.Text);
+        Open;
+      end;
+      if FDQuery1id.AsInteger=0 then
+      begin
+        MsgAviso('NO EXISTE VEHICULO CON ESE CODIGO');
+        edVehiculo.Text:='';
+      end;
+
+    end;
+      meDescripcion.SetFocus;
+
+  end;
+
+end;
+
+procedure TfrMant_Tarea.edVehiculoMouseEnter(Sender: TObject);
+begin
+  inherited;
+Panel1.Visible:=True;
+end;
+
+procedure TfrMant_Tarea.edVehiculoMouseLeave(Sender: TObject);
+begin
+  inherited;
+
+  Panel1.Visible:=False;
+
+end;
+
+procedure TfrMant_Tarea.FormActivate(Sender: TObject);
+begin
+  inherited;
+
+   with clPresupuesto do
+    begin
+      Close;
+      CreateDataSet;
+      Append;
+    end;
+   DateTimePicker1.Date := Now;
+ //  DateTimePicker2.Date := Now;
+   DateTimePicker1.Checked := False;
+ //  DateTimePicker2.Checked := False;
+end;
+
+procedure TfrMant_Tarea.Habilitar(lOk: Boolean);
+begin
+
+  meDescripcion.Enabled := lOk;
+  meComentario.Enabled := lOk;
+  edVehiculo.Enabled := lOk;
+  edPresupuesto.Visible := lOk;
+ // edNombre.Clear;
+  DateTimePicker1.Visible := lOk;
+//  DateTimePicker2.Visible := lOk;
+  txNom.Visible := lOk;
+  txDir.Visible := lOk;
+  txTel.Visible := lOk;
+  Label1.Visible := lOk;
+  Label2.Visible := lOk;
+  Label3.Visible := lOk;
+  Label4.Visible := lOk;
+  Label5.Visible := lOk;
+  Label6.Visible := lOk;
+  Label7.Visible := lOk;
+  DBGrid1.Enabled:= lOk;
+  DBGrid2.Enabled:= lOk;
+  pnImagenes.Visible := not lOk;
+  pnImagenes.Enabled := not lOk;
+  if not lOk then
+    ListarImagen;
+
+end;
+
+procedure TfrMant_Tarea.IniPant;
+begin
+
+  meDescripcion.Clear;
+  meComentario.Clear;
+  edVehiculo.Clear;
+  btnAgrImagen.Enabled := False;
+ // edNombre.Clear;
+  DateTimePicker1.Checked := False;
+ // DateTimePicker2.Checked := False;
+  qrCodigo.Close;
+  FDQuery1.Close;
+  clPresupuesto.Close;
+  clMaterial.Close;
+  clImporte.Close;
+  qrMaterial.Close;
+  edCantidad.Clear;
+  FDQuery2.Close;
+  cbMaterial.ItemIndex := -1;
+  HabMant(False);
+  edCodigo.SetFocus;
+
+
+end;
+
+procedure TfrMant_Tarea.ListarImagen;
+var
+  lOk : Boolean;
+  BitMap : TJPEGImage;
+  cant : Integer;
+begin
+  indice:=0;
+  with qrImagen do
+  begin
+    Close;
+    ParamByName('paIdT').Value := qrCodigoid.AsInteger;
+    Open;
+  end;
+  if qrImagenDireccion.AsString<>'' then
+    Files := TDirectory.GetFiles(qrImagenDireccion.AsString, '*.*', TSearchOption.soAllDirectories);
+
+  if Length(Files)>0 then
+  begin
+    CargarImagenLista(indice);
+    if Length(Files)>1 then
+    begin
+
+      btnSig.Enabled := True;
+      btnAnt.Enabled := False;
+    end
+  end
+  else
+  begin
+    btnSig.Enabled := False;
+    btnAnt.Enabled := False;
+  end;
+
+
+
+end;
+
+procedure TfrMant_Tarea.LlenarCombo;
+begin
+
+  with FDQuery2 do
+  begin
+    Close;
+    Open;
+    if not IsEmpty then
+    begin
+      while not Eof do
+      begin
+        cbMaterial.Items.Add(FDQuery2Nombre.AsString);
+        Next;
+      end;
+    end;
+  end;
+
+end;
+
+procedure TfrMant_Tarea.meDescripcionKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+
+  if key=#13 then
+    DBGrid2.SetFocus;
+
+
+end;
+
+
+
+
+
+procedure TfrMant_Tarea.qrCodigoAfterOpen(DataSet: TDataSet);
+begin
+  inherited;
+
+  if not qrCodigo.IsEmpty then
+  begin
+    edVehiculo.Text := qrCodigoidVehiculo.AsString;
+    qrOpen(FDQuery1,edVehiculo);
+    meDescripcion.Text := qrCodigoDescripcion.AsString;
+    meComentario.Text := qrCodigoComentario.Text;
+    edNombre.Text :=  qrCodigoPresupuesto.AsString;
+    btnAgrImagen.Enabled := True;
+
+    if qrCodigoiniTarea.AsFloat<>0 then
+      DateTimePicker1.Date := qrCodigoiniTarea.AsDateTime;
+
+    with qrPresupuesto do
+    begin
+      Close;
+      ParamByName('paIdT').Value := qrCodigoid.AsInteger;
+      Open;
+    end;
+    with qrMaterial do
+    begin
+      Close;
+      ParamByName('paIdT').Value := qrCodigoid.AsInteger;
+      Open;
+    end;
+    CargarCliente;
+  end;
+
+end;
+
+end.

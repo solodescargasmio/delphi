@@ -1,0 +1,51 @@
+inherited frCons_Material: TfrCons_Material
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Consulta Materiales'
+  ClientHeight = 506
+  ClientWidth = 541
+  FormStyle = fsMDIChild
+  Visible = True
+  WindowState = wsNormal
+  ExplicitWidth = 547
+  ExplicitHeight = 535
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnParametros: TPanel
+    Width = 541
+    Height = 186
+    ExplicitWidth = 541
+    ExplicitHeight = 186
+    inherited Image1: TImage
+      Left = 404
+      Top = 10
+      ExplicitLeft = 404
+      ExplicitTop = 10
+    end
+  end
+  inherited pnDatos: TPanel
+    Width = 541
+    Height = 283
+    ExplicitWidth = 541
+    ExplicitHeight = 283
+  end
+  inherited pnPie: TPanel
+    Width = 554
+    Height = 60
+    ExplicitWidth = 554
+    ExplicitHeight = 60
+  end
+  inherited qrCodigo: TFDQuery
+    SQL.Strings = (
+      
+        'select v.id,v.Matricula,v.Marca,v.Anio,'#10'concat(c.Nombre,'#39' '#39',c.Ap' +
+        'ellido) as Nombre,'#13#10#10
+      
+        #10#10't.Descripcion,t.iniTarea,t.finTarea,sum(dp.Importe) as Presupu' +
+        'esto'#13#10#10
+      #10'from vehiculo v'#13#10#10
+      #10#10'inner join cliente c on c.id=v.idCliente'#13#10#10
+      #10#10'left join tarea t on t.idVehiculo=v.id'#13#10#10
+      #10#10'left join detalle_presupuesto dp on dp.idTarea=t.id')
+  end
+end

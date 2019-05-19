@@ -1,0 +1,54 @@
+inherited frCons_Medidas: TfrCons_Medidas
+  Caption = 'Consulta Medidas'
+  ExplicitWidth = 547
+  ExplicitHeight = 535
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnParametros: TPanel
+    Top = -14
+    Height = 151
+    ExplicitTop = -14
+    ExplicitHeight = 151
+    inherited Image1: TImage
+      Left = 352
+      Top = -25
+      Width = 179
+      Height = 175
+      ExplicitLeft = 352
+      ExplicitTop = -25
+      ExplicitWidth = 179
+      ExplicitHeight = 175
+    end
+    inherited rgFecha: TRadioGroup
+      Visible = False
+    end
+    inherited edCodigo: TLabeledEdit
+      Visible = False
+    end
+    inherited pnPeriodo: TPanel
+      Visible = False
+    end
+  end
+  inherited pnDatos: TPanel
+    Top = 126
+    Height = 315
+    ExplicitTop = 126
+    ExplicitHeight = 315
+    inherited grConsulta: TDBGrid
+      Top = 16
+      Height = 297
+    end
+  end
+  inherited pnPie: TPanel
+    inherited btnActualizar: TButton
+      Left = 337
+      Enabled = False
+      ExplicitLeft = 337
+    end
+    inherited btnCancelar: TButton
+      Left = 434
+      Enabled = False
+      ExplicitLeft = 434
+    end
+  end
+end

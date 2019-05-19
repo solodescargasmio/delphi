@@ -1,0 +1,900 @@
+inherited frMant_Tarea: TfrMant_Tarea
+  BorderStyle = bsSingle
+  Caption = 'Mantenimiento Tarea'
+  ClientHeight = 630
+  ClientWidth = 786
+  ExplicitLeft = -201
+  ExplicitTop = -29
+  ExplicitWidth = 792
+  ExplicitHeight = 659
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnParametros: TPanel
+    Top = -13
+    Width = 786
+    Height = 95
+    ExplicitTop = -13
+    ExplicitWidth = 786
+    ExplicitHeight = 95
+    inherited Image1: TImage
+      Left = 633
+      ExplicitLeft = 440
+    end
+    inherited edCodigo: TLabeledEdit
+      Left = 110
+      Top = 40
+      Width = 25
+      EditLabel.Width = 55
+      EditLabel.Caption = 'ID Tarea'
+      EditLabel.ExplicitLeft = 52
+      EditLabel.ExplicitTop = 42
+      EditLabel.ExplicitWidth = 55
+      EditLabel.ExplicitHeight = 16
+      OnKeyDown = edCodigoKeyDown
+      OnKeyPress = edCodigoKeyPress
+      ExplicitLeft = 110
+      ExplicitTop = 40
+      ExplicitWidth = 25
+    end
+    inherited mk_Ci: TMaskEdit
+      Left = 152
+      Top = 48
+      Visible = False
+      ExplicitLeft = 152
+      ExplicitTop = 48
+    end
+    inherited pnAyuda: TPanel
+      Left = 64
+      Top = 63
+      ExplicitLeft = 64
+      ExplicitTop = 63
+    end
+  end
+  inherited pnPie: TPanel [1]
+    Top = 553
+    Width = 833
+    Height = 77
+    ExplicitTop = 553
+    ExplicitWidth = 833
+    ExplicitHeight = 77
+    inherited btnActualizar: TButton
+      Left = 559
+      OnClick = btnActualizarClick
+      ExplicitLeft = 559
+    end
+    inherited btnCancelar: TButton
+      Left = 664
+      OnClick = btnCancelarClick
+      ExplicitLeft = 664
+    end
+  end
+  inherited pnBody: TPanel [2]
+    Top = 80
+    Width = 786
+    Height = 482
+    ExplicitTop = 80
+    ExplicitWidth = 786
+    ExplicitHeight = 482
+    object txNom: TDBText [0]
+      Left = 152
+      Top = 25
+      Width = 241
+      Height = 17
+      DataField = 'Vehiculo'
+      DataSource = DataSource1
+    end
+    object txDir: TDBText [1]
+      Left = 152
+      Top = 48
+      Width = 241
+      Height = 17
+      DataField = 'Cliente'
+      DataSource = DataSource1
+    end
+    object txTel: TDBText [2]
+      Left = 152
+      Top = 72
+      Width = 209
+      Height = 17
+      DataField = 'Telefono'
+      Visible = False
+    end
+    object Label1: TLabel [3]
+      Left = 556
+      Top = 41
+      Width = 56
+      Height = 13
+      Caption = 'Inicio Tarea'
+    end
+    object Label3: TLabel [4]
+      Left = 567
+      Top = 60
+      Width = 45
+      Height = 13
+      Caption = 'Fin Tarea'
+      Visible = False
+    end
+    object Label4: TLabel [5]
+      Left = 50
+      Top = 72
+      Width = 54
+      Height = 13
+      Caption = 'Descripcion'
+    end
+    object Label6: TLabel [6]
+      Left = 450
+      Top = 74
+      Width = 60
+      Height = 13
+      Caption = 'Comentarios'
+    end
+    object Label5: TLabel [7]
+      Left = 50
+      Top = 133
+      Width = 136
+      Height = 13
+      Caption = 'DETALLES PRESUPUESTO'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label7: TLabel [8]
+      Left = 64
+      Top = 357
+      Width = 72
+      Height = 13
+      Caption = 'Presupuesto $ '
+    end
+    inherited edNombre: TLabeledEdit
+      Left = 344
+      Top = 0
+      Width = 65
+      EditLabel.Width = 60
+      EditLabel.Caption = 'Presupuesto'
+      EditLabel.ExplicitLeft = 281
+      EditLabel.ExplicitTop = 4
+      EditLabel.ExplicitWidth = 60
+      Visible = False
+      ExplicitLeft = 344
+      ExplicitTop = 0
+      ExplicitWidth = 65
+    end
+    inherited edApellido: TLabeledEdit
+      Left = 651
+      Top = 16
+      EditLabel.ExplicitLeft = 611
+      EditLabel.ExplicitTop = 20
+      EditLabel.ExplicitWidth = 37
+      Visible = False
+      ExplicitLeft = 651
+      ExplicitTop = 16
+    end
+    inherited edDireccion: TLabeledEdit
+      Left = 663
+      Top = 16
+      EditLabel.ExplicitLeft = 617
+      EditLabel.ExplicitTop = 20
+      EditLabel.ExplicitWidth = 43
+      Visible = False
+      ExplicitLeft = 663
+      ExplicitTop = 16
+    end
+    inherited edCiudad: TLabeledEdit
+      Left = 663
+      Top = 16
+      EditLabel.ExplicitLeft = 627
+      EditLabel.ExplicitTop = 20
+      EditLabel.ExplicitWidth = 33
+      Visible = False
+      ExplicitLeft = 663
+      ExplicitTop = 16
+    end
+    inherited edTelefono: TLabeledEdit
+      Left = 536
+      Top = 113
+      EditLabel.ExplicitLeft = 491
+      EditLabel.ExplicitTop = 117
+      EditLabel.ExplicitWidth = 42
+      Visible = False
+      ExplicitLeft = 536
+      ExplicitTop = 113
+    end
+    inherited mk_Documento: TMaskEdit
+      Left = 320
+      Top = -2
+      Width = 120
+      Text = ''
+      Visible = False
+      ExplicitLeft = 320
+      ExplicitTop = -2
+      ExplicitWidth = 120
+    end
+    inherited DateTimePicker1: TDateTimePicker
+      Left = 633
+      Top = 34
+      Width = 117
+      ShowCheckbox = True
+      Checked = False
+      Visible = True
+      OnKeyPress = DateTimePicker1KeyPress
+      ExplicitLeft = 633
+      ExplicitTop = 34
+      ExplicitWidth = 117
+    end
+    inherited DateTimePicker2: TDateTimePicker
+      Left = 633
+      Top = 52
+      Width = 117
+      ShowCheckbox = True
+      Checked = False
+      ExplicitLeft = 633
+      ExplicitTop = 52
+      ExplicitWidth = 117
+    end
+    object edVehiculo: TLabeledEdit
+      Left = 112
+      Top = 22
+      Width = 25
+      Height = 21
+      EditLabel.Width = 53
+      EditLabel.Height = 13
+      EditLabel.Caption = 'ID Vehiculo'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      LabelPosition = lpLeft
+      NumbersOnly = True
+      ParentFont = False
+      TabOrder = 8
+      OnChange = edVehiculoChange
+      OnKeyDown = edVehiculoKeyDown
+      OnKeyPress = edVehiculoKeyPress
+      OnMouseEnter = edVehiculoMouseEnter
+      OnMouseLeave = edVehiculoMouseLeave
+    end
+    object meDescripcion: TMemo
+      Left = 110
+      Top = 74
+      Width = 235
+      Height = 53
+      Lines.Strings = (
+        '')
+      TabOrder = 9
+      OnKeyPress = meDescripcionKeyPress
+    end
+    object meComentario: TMemo
+      Left = 522
+      Top = 79
+      Width = 235
+      Height = 48
+      Lines.Strings = (
+        '')
+      TabOrder = 10
+    end
+    object DBGrid1: TDBGrid
+      Left = 456
+      Top = 234
+      Width = 301
+      Height = 136
+      DataSource = suMaterial
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      TabOrder = 11
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      OnKeyDown = DBGrid1KeyDown
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'Material'
+          Title.Caption = 'Material Utilizado'
+          Width = 180
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Cantidad'
+          Width = 50
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'Medida'
+          Width = 40
+          Visible = True
+        end>
+    end
+    object DBGrid2: TDBGrid
+      Left = 64
+      Top = 152
+      Width = 313
+      Height = 185
+      DataSource = suPres
+      TabOrder = 12
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'Detalle'
+          Width = 200
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Importe'
+          Visible = True
+        end>
+    end
+    object chCerrar: TCheckBox
+      Left = 483
+      Top = 384
+      Width = 170
+      Height = 17
+      Caption = 'Cerrar Presupuesto'
+      TabOrder = 13
+      Visible = False
+    end
+    object edPresupuesto: TDBEdit
+      Left = 152
+      Top = 357
+      Width = 121
+      Height = 21
+      DataField = 'Total'
+      DataSource = suPres
+      TabOrder = 14
+    end
+    object btnAgrImagen: TButton
+      Left = 629
+      Top = 424
+      Width = 128
+      Height = 25
+      Caption = 'Agregar Imagenes'
+      Enabled = False
+      TabOrder = 16
+      OnClick = btnAgrImagenClick
+    end
+    object pnMaterial: TPanel
+      Left = 456
+      Top = 140
+      Width = 301
+      Height = 88
+      TabOrder = 17
+      object Label8: TLabel
+        Left = 17
+        Top = 28
+        Width = 49
+        Height = 13
+        Caption = 'Materiales'
+      end
+      object txMedida: TDBText
+        Left = 111
+        Top = 56
+        Width = 75
+        Height = 17
+        DataField = 'Simbolo'
+        DataSource = suMedida
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label2: TLabel
+        Left = 30
+        Top = 4
+        Width = 71
+        Height = 13
+        Caption = 'MATERIALES'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object edCantidad: TLabeledEdit
+        Left = 72
+        Top = 56
+        Width = 33
+        Height = 21
+        EditLabel.Width = 43
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Cantidad'
+        LabelPosition = lpLeft
+        TabOrder = 0
+      end
+      object cbMaterial: TComboBox
+        Left = 72
+        Top = 23
+        Width = 145
+        Height = 21
+        TabOrder = 1
+        OnSelect = cbMaterialSelect
+      end
+      object btnAgrMedida: TButton
+        Left = 232
+        Top = 56
+        Width = 59
+        Height = 25
+        Caption = 'Agregar'
+        TabOrder = 2
+        OnClick = btnAgrMedidaClick
+      end
+    end
+    object Panel1: TPanel
+      Left = 72
+      Top = 44
+      Width = 105
+      Height = 37
+      Caption = '&F1 Ayuda'
+      Color = clInfoBk
+      ParentBackground = False
+      TabOrder = 18
+      Visible = False
+    end
+    object pnImagenes: TPanel
+      Left = 65
+      Top = 48
+      Width = 523
+      Height = 392
+      BorderStyle = bsSingle
+      TabOrder = 15
+      Visible = False
+      object imgPrincipal: TImage
+        Left = 33
+        Top = 48
+        Width = 262
+        Height = 249
+        Stretch = True
+      end
+      object imgLista: TImage
+        Left = 359
+        Top = 48
+        Width = 147
+        Height = 121
+        Stretch = True
+      end
+      object btnGuardarImagen: TButton
+        Left = 190
+        Top = 312
+        Width = 105
+        Height = 25
+        Caption = 'Guardar Imagen'
+        TabOrder = 0
+        OnClick = btnGuardarImagenClick
+      end
+      object btnBuscarImagen: TButton
+        Left = 32
+        Top = 310
+        Width = 105
+        Height = 25
+        Caption = 'Buscar Imagen'
+        TabOrder = 1
+        OnClick = btnBuscarImagenClick
+      end
+      object edNomImagen: TLabeledEdit
+        Left = 174
+        Top = 21
+        Width = 121
+        Height = 21
+        EditLabel.Width = 121
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Nombre de la Imagen'
+        EditLabel.Font.Charset = DEFAULT_CHARSET
+        EditLabel.Font.Color = clWindowText
+        EditLabel.Font.Height = -11
+        EditLabel.Font.Name = 'Tahoma'
+        EditLabel.Font.Style = [fsBold]
+        EditLabel.ParentFont = False
+        LabelPosition = lpLeft
+        TabOrder = 2
+      end
+      object btnAnt: TButton
+        Left = 367
+        Top = 175
+        Width = 44
+        Height = 25
+        Caption = '<<<'
+        TabOrder = 3
+        OnClick = btnAntClick
+      end
+      object btnSig: TButton
+        Left = 472
+        Top = 175
+        Width = 44
+        Height = 25
+        Caption = '>>>'
+        TabOrder = 4
+        OnClick = btnSigClick
+      end
+      object btnImgSalir: TButton
+        Left = 457
+        Top = 353
+        Width = 59
+        Height = 25
+        Caption = 'Salir'
+        TabOrder = 5
+        OnClick = btnImgSalirClick
+      end
+      object edImg: TEdit
+        Left = 368
+        Top = 216
+        Width = 145
+        Height = 21
+        ReadOnly = True
+        TabOrder = 6
+      end
+      object btnElimImagen: TButton
+        Left = 369
+        Top = 243
+        Width = 144
+        Height = 25
+        Caption = 'Eliminar Imagen'
+        TabOrder = 7
+        OnClick = btnElimImagenClick
+      end
+    end
+  end
+  inherited qrCodigo: TFDQuery
+    AfterOpen = qrCodigoAfterOpen
+    SQL.Strings = (
+      'select * '
+      'from tarea'
+      'where id=:paId')
+    object qrCodigoid: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object qrCodigoidVehiculo: TIntegerField
+      FieldName = 'idVehiculo'
+      Origin = 'idVehiculo'
+      Required = True
+    end
+    object qrCodigoDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Origin = 'Descripcion'
+      Required = True
+      Size = 100
+    end
+    object qrCodigoComentario: TStringField
+      FieldName = 'Comentario'
+      Origin = 'Comentario'
+      Required = True
+      Size = 100
+    end
+    object qrCodigoiniTarea: TDateField
+      FieldName = 'iniTarea'
+      Origin = 'iniTarea'
+      Required = True
+    end
+    object qrCodigoPresupuesto: TBCDField
+      AutoGenerateValue = arDefault
+      FieldName = 'Presupuesto'
+      Origin = 'Presupuesto'
+      Precision = 10
+      Size = 2
+    end
+  end
+  inherited FDQuery1: TFDQuery
+    SQL.Strings = (
+      
+        'select v.id, concat(v.Marca,'#39' Patente '#39',v.Matricula) as Vehiculo' +
+        ','
+      'concat(c.Nombre,'#39' '#39',c.Apellido) as Cliente'
+      'from vehiculo v'
+      'left join cliente c on c.id=v.idCliente'
+      'where v.id=:paId')
+    Left = 200
+    Top = 104
+    ParamData = <
+      item
+        Name = 'PAID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object FDQuery1Vehiculo: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Vehiculo'
+      Origin = 'Vehiculo'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 69
+    end
+    object FDQuery1Cliente: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Cliente'
+      Origin = 'Cliente'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 101
+    end
+    object FDQuery1id: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+  end
+  inherited DataSource1: TDataSource
+    Left = 224
+    Top = 64
+  end
+  inherited clGeneral: TClientDataSet
+    Left = 448
+    Top = 240
+  end
+  inherited dpGeneral: TDataSetProvider
+    Top = 240
+  end
+  inherited dpIndividual: TDataSetProvider
+    Left = 448
+    Top = 200
+  end
+  object suMaterial: TDataSource
+    DataSet = clMaterial
+    Left = 400
+    Top = 384
+  end
+  object suPres: TDataSource
+    DataSet = clPresupuesto
+    Left = 272
+    Top = 176
+  end
+  object qrPresupuesto: TFDQuery
+    Connection = con.Mysql
+    SQL.Strings = (
+      'SELECT * FROM detalle_presupuesto'
+      'Where idTarea=:paIdT ')
+    Left = 224
+    Top = 232
+    ParamData = <
+      item
+        Name = 'PAIDT'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object qrPresupuestoidTarea: TIntegerField
+      FieldName = 'idTarea'
+      Origin = 'idTarea'
+      Required = True
+    end
+    object qrPresupuestodetalle: TStringField
+      FieldName = 'detalle'
+      Origin = 'detalle'
+      Required = True
+      Size = 100
+    end
+    object qrPresupuestoImporte: TBCDField
+      AutoGenerateValue = arDefault
+      FieldName = 'Importe'
+      Origin = 'Importe'
+      Precision = 10
+      Size = 2
+    end
+  end
+  object qrMaterial: TFDQuery
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select * from materiales'
+      'where idTarea=:paIdT ')
+    Left = 360
+    Top = 184
+    ParamData = <
+      item
+        Name = 'PAIDT'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object qrMaterialidTarea: TIntegerField
+      FieldName = 'idTarea'
+      Origin = 'idTarea'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object qrMaterialidMaterial: TIntegerField
+      FieldName = 'idMaterial'
+      Origin = 'idMaterial'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object qrMaterialCantidad: TBCDField
+      AutoGenerateValue = arDefault
+      FieldName = 'Cantidad'
+      Origin = 'Cantidad'
+      Precision = 10
+      Size = 2
+    end
+  end
+  object clImporte: TClientDataSet
+    PersistDataPacket.Data = {
+      2A0000009619E0BD0100000018000000010000000000030000002A0007496D70
+      6F72746508000400000000000000}
+    Active = True
+    Aggregates = <>
+    Params = <>
+    Left = 320
+    Top = 440
+    object clImporteImporte: TFloatField
+      FieldName = 'Importe'
+      DisplayFormat = '###,###,##0.00'
+      EditFormat = '#########.##'
+    end
+  end
+  object suImporte: TDataSource
+    DataSet = clImporte
+    Left = 368
+    Top = 448
+  end
+  object clPresupuesto: TClientDataSet
+    Aggregates = <>
+    AggregatesActive = True
+    Params = <>
+    Left = 128
+    Top = 272
+    object clPresupuestoDetalle: TStringField
+      FieldName = 'Detalle'
+      Size = 100
+    end
+    object clPresupuestoImporte: TFloatField
+      FieldName = 'Importe'
+      DisplayFormat = '###,###,##0.00'
+      EditFormat = '#########.##'
+    end
+    object clPresupuestoTotal: TAggregateField
+      FieldName = 'Total'
+      Active = True
+      DisplayName = ''
+      DisplayFormat = '###,###,##0.00'
+      Expression = 'Sum(Importe)'
+    end
+  end
+  object OpenPictureDialog1: TOpenPictureDialog
+    Left = 145
+    Top = 89
+  end
+  object ImageList1: TImageList
+    Left = 366
+    Top = 128
+  end
+  object qrImagen: TFDQuery
+    Connection = con.Mysql
+    SQL.Strings = (
+      'SELECT * FROM imagen_tarea'
+      'Where idTarea=:paIdT ')
+    Left = 368
+    Top = 248
+    ParamData = <
+      item
+        Name = 'PAIDT'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object qrImagenidTarea: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'idTarea'
+      Origin = 'idTarea'
+    end
+    object qrImagenDireccion: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Direccion'
+      Origin = 'Direccion'
+      Size = 100
+    end
+    object qrImagenNombre: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Nombre'
+      Origin = 'Nombre'
+      Size = 45
+    end
+  end
+  object qrMedida: TFDQuery
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select * from medida'
+      'where id=:paId ')
+    Left = 720
+    Top = 376
+    ParamData = <
+      item
+        Name = 'PAID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 2
+      end>
+    object qrMedidaid: TIntegerField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object qrMedidaNombre: TStringField
+      FieldName = 'Nombre'
+      Origin = 'Nombre'
+      Required = True
+    end
+    object qrMedidaSimbolo: TStringField
+      FieldName = 'Simbolo'
+      Origin = 'Simbolo'
+      Required = True
+      Size = 5
+    end
+  end
+  object suMedida: TDataSource
+    DataSet = qrMedida
+    Left = 728
+    Top = 328
+  end
+  object FDQuery2: TFDQuery
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select *'
+      'from material'
+      ''
+      '')
+    Left = 592
+    Top = 152
+    object FDQuery2id: TIntegerField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object FDQuery2Nombre: TStringField
+      FieldName = 'Nombre'
+      Origin = 'Nombre'
+      Required = True
+      Size = 50
+    end
+    object FDQuery2idMedida: TIntegerField
+      FieldName = 'idMedida'
+      Origin = 'idMedida'
+      Required = True
+    end
+  end
+  object clMaterial: TClientDataSet
+    PersistDataPacket.Data = {
+      760000009619E0BD0100000018000000040000000000030000007600084D6174
+      657269616C010049000000010005574944544802000200C8000843616E746964
+      61640800040000000000064D6564696461010049000000010005574944544802
+      00020014000A69644D6174657269616C04000100000000000000}
+    Active = True
+    Aggregates = <>
+    Params = <>
+    Left = 441
+    Top = 408
+    object clMaterialMaterial: TStringField
+      FieldName = 'Material'
+      Size = 200
+    end
+    object clMaterialCantidad: TFloatField
+      FieldName = 'Cantidad'
+      DisplayFormat = '###,##0.00'
+      EditFormat = '########.00'
+    end
+    object clMaterialMedida: TStringField
+      FieldName = 'Medida'
+    end
+    object clMaterialidMaterial: TIntegerField
+      FieldName = 'idMaterial'
+    end
+  end
+end

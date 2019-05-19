@@ -1,0 +1,379 @@
+unit uCons_Tarea;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uBase_Consulta, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Datasnap.Provider, Datasnap.DBClient,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Grids,
+  Vcl.DBGrids, Vcl.ComCtrls, Vcl.ExtCtrls,
+  System.IOUtils, Vcl.Imaging.jpeg, Vcl.DBCtrls,System.Types;
+
+type
+  TfrCons_Tarea = class(TfrBase_Consulta)
+    DBGrid1: TDBGrid;
+    qrCodigoid: TFDAutoIncField;
+    qrCodigoidVehiculo: TIntegerField;
+    qrCodigoDescripcion: TStringField;
+    qrCodigoComentario: TStringField;
+    qrCodigoPresupuesto: TSingleField;
+    qrCodigoiniTarea: TDateField;
+    qrCodigofinTarea: TDateField;
+    qrCodigoEstado: TStringField;
+    Splitter2: TSplitter;
+    DBGrid2: TDBGrid;
+    Splitter3: TSplitter;
+    qrCodigoNombre: TStringField;
+    clTarea: TClientDataSet;
+    ClientDataSet2: TClientDataSet;
+    clIndividualid: TAutoIncField;
+    clIndividualidVehiculo: TIntegerField;
+    clIndividualDescripcion: TStringField;
+    clIndividualComentario: TStringField;
+    clIndividualPresupuesto: TSingleField;
+    clIndividualiniTarea: TDateField;
+    clIndividualfinTarea: TDateField;
+    clIndividualEstado: TStringField;
+    clIndividualNombre: TStringField;
+    ClientDataSet3: TClientDataSet;
+    clTareaNombre: TStringField;
+    clTareaDescripcion: TStringField;
+    clTareaEstado: TStringField;
+    clTareaInicio: TDateField;
+    clTareaFin: TDateField;
+    clTareaPresupuesto: TFloatField;
+    Button1: TButton;
+    pnImagen: TPanel;
+    imgLista: TImage;
+    btnSig: TButton;
+    btnAnt: TButton;
+    qrImagen: TFDQuery;
+    qrImagenid: TFDAutoIncField;
+    qrImagenidTarea: TIntegerField;
+    qrImagenDireccion: TStringField;
+    qrImagenNombre: TStringField;
+    qrPresupuesto: TFDQuery;
+    suPresupuesto: TDataSource;
+    qrPresupuestoidTarea: TIntegerField;
+    qrPresupuestodetalle: TStringField;
+    qrPresupuestoImporte: TSingleField;
+    qrMaterial: TFDQuery;
+    suMaterial: TDataSource;
+    qrMaterialCantidad: TSingleField;
+    qrMaterialNombre: TStringField;
+    qrMaterialMedida: TStringField;
+    pnImgTotal: TPanel;
+    imgTotal: TImage;
+    Button2: TButton;
+    procedure edCodigoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure edCodigoKeyPress(Sender: TObject; var Key: Char);
+    procedure btnActualizarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure qrCodigoAfterOpen(DataSet: TDataSet);
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure btnAntClick(Sender: TObject);
+    procedure btnSigClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure qrCodigoAfterClose(DataSet: TDataSet);
+  private
+    { Private declarations }
+    procedure CargarDatos;
+    procedure CargarImagenLista(imagen : Integer);
+    procedure ListarImagen;
+    procedure Habilitar(lOk : Boolean);
+    procedure IniPant;
+  public
+    { Public declarations }
+  end;
+
+var
+  frCons_Tarea: TfrCons_Tarea;
+  Files : TStringDynArray;
+  indice : Integer;
+  Dire : String;
+
+implementation
+
+{$R *.dfm}
+
+uses udm,uAyuda,uMensage;
+
+procedure TfrCons_Tarea.btnActualizarClick(Sender: TObject);
+begin
+  inherited;
+
+
+  IniciarFecha;
+
+  if ValidarFechas(dtConfInicio.DateTime,dtConfFin.DateTime) then
+  begin
+    with qrCodigo do
+    begin
+      SQL.Clear;
+      SQL.Add('select t.*,concat(v.Marca," Patente: ",v.Matricula) as Nombre'+
+              ' from tarea t ' +
+              ' inner join vehiculo v on v.id=t.idVehiculo ');
+
+      case rgFecha.ItemIndex of
+        0:begin
+           SQL.Add('  where t.iniTarea >= :paIniTar');
+           ParamByName('paIniTar').Value := dtConfInicio.Date;
+        end;
+        1:begin
+           SQL.Add(' where t.iniTarea >= :paIniTar and t.iniTarea <= :paFinTar');
+           ParamByName('paFinTar').Value := dtConfFin.DateTime;
+           ParamByName('paIniTar').Value := dtConfInicio.DateTime;
+        end;
+        2:begin
+           SQL.Add('  where t.iniTarea >= :paIniTar and t.iniTarea <= :paFinTar');
+           ParamByName('paFinTar').Value := dtConfFin.DateTime;
+           ParamByName('paIniTar').Value := dtConfInicio.DateTime;
+        end;
+        3:begin
+
+        end;
+      end;
+
+
+      Open;
+     end;
+
+  end
+  else
+  begin
+    MsgAviso('LAS FECHAS SON INCORRECTAS');
+    dt_Inicio.SetFocus;
+  end;
+
+
+
+
+end;
+
+procedure TfrCons_Tarea.btnAntClick(Sender: TObject);
+begin
+  inherited;
+
+    if (Length(Files)>=indice-1) and (indice>0) then
+  begin
+    indice := indice-1;
+    CargarImagenLista(indice);
+  end;
+
+end;
+
+procedure TfrCons_Tarea.btnCancelarClick(Sender: TObject);
+begin
+  inherited;
+
+  IniPant;
+
+end;
+
+procedure TfrCons_Tarea.btnSigClick(Sender: TObject);
+begin
+  inherited;
+
+  if Length(Files)>=indice+2 then
+  begin
+    indice := indice+1;
+    CargarImagenLista(indice);
+  end;
+
+end;
+
+procedure TfrCons_Tarea.Button1Click(Sender: TObject);
+begin
+  inherited;
+
+  imgTotal.Picture:=imgLista.Picture;
+  pnImgTotal.Visible := True;
+  pnPie.Enabled := False;
+
+
+end;
+
+procedure TfrCons_Tarea.Button2Click(Sender: TObject);
+begin
+  inherited;
+
+  pnImgTotal.Visible := False;
+  pnPie.Enabled := True;
+
+end;
+
+procedure TfrCons_Tarea.CargarDatos;
+begin
+  if not qrCodigo.IsEmpty then
+  begin
+
+   { with clTarea do
+    begin
+      Close;
+      CreateDataSet;
+      qrCodigo.First;
+      while not qrCodigo.Eof do
+      begin
+        Append;
+        clTareaNombre.Value := qrCodigoNombre.AsString;
+        clTareaDescripcion.Value := qrCodigoDescripcion.AsString;
+        clTareaInicio.Value := qrCodigoiniTarea.AsDateTime;
+        clTareaFin.Value := qrCodigofinTarea.AsDateTime;
+        if qrCodigoEstado.AsString='A' then
+          clTareaEstado.Value := 'Abierto'
+        else
+          clTareaEstado.Value := 'Terminado';
+        clTareaPresupuesto.Value := qrCodigoPresupuesto.AsFloat;
+        qrCodigo.Next;
+      end;
+      Post;
+    end;
+    clTarea.Active; }
+    with qrPresupuesto do
+    begin
+      Close;
+      ParamByName('paIdT').Value := qrCodigoid.AsInteger;
+      Open;
+    end;
+    with qrMaterial do
+    begin
+      Close;
+      ParamByName('paIdT').Value := qrCodigoid.AsInteger;
+      Open;
+    end;
+    ListarImagen;
+    HabMant(True);
+  end
+  else
+    MsgAviso('NO SE INGRESARON TAREAS EN LA FECHA ESPECIFICADA');
+end;
+
+procedure TfrCons_Tarea.CargarImagenLista(imagen: Integer);
+var
+  nomb : String;
+
+begin
+
+   Dire:=Files[imagen];
+   nomb := ExtractFileName(Files[imagen]);
+  imgLista.Picture.LoadFromFile(Files[imagen]);
+  if Length(Files)>imagen then
+  begin
+    btnSig.Enabled := True;
+  end
+  else
+    btnSig.Enabled := False;
+
+  if imagen>0 then
+    btnAnt.Enabled := True;
+end;
+
+procedure TfrCons_Tarea.edCodigoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+
+  if key=112 then
+    Ayuda('tarea',edCodigo);
+
+
+end;
+
+procedure TfrCons_Tarea.edCodigoKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+
+  if key=#13 then
+  begin
+    qrOpen(qrCodigo,edCodigo)
+
+  end;
+
+end;
+
+procedure TfrCons_Tarea.FormCreate(Sender: TObject);
+begin
+  inherited;
+
+  rgFecha.ItemIndex := 0;
+
+end;
+
+procedure TfrCons_Tarea.Habilitar(lOk: Boolean);
+begin
+
+  if not lOk then
+    ListarImagen;
+
+end;
+
+procedure TfrCons_Tarea.IniPant;
+begin
+
+  qrMaterial.Close;
+  qrPresupuesto.Close;
+  FDQuery1.Close;
+  qrImagen.Close;
+  qrCodigo.Close;
+  clTarea.Close;
+  imgLista.Picture:=nil;
+  HabMant(False);
+  edCodigo.SetFocus;
+
+end;
+
+procedure TfrCons_Tarea.ListarImagen;
+var
+  lOk : Boolean;
+  cant : Integer;
+begin
+  indice:=0;
+  with qrImagen do
+  begin
+    Close;
+    ParamByName('paIdT').Value := qrCodigoid.AsInteger;
+    Open;
+  end;
+    Files := TDirectory.GetFiles(qrImagenDireccion.AsString, '*.*', TSearchOption.soAllDirectories);
+
+  if Length(Files)>0 then
+  begin
+    CargarImagenLista(indice);
+    if Length(Files)>1 then
+    begin
+
+      btnSig.Enabled := True;
+      btnAnt.Enabled := False;
+    end
+  end
+  else
+  begin
+    btnSig.Enabled := False;
+    btnAnt.Enabled := False;
+  end;
+
+
+end;
+
+procedure TfrCons_Tarea.qrCodigoAfterClose(DataSet: TDataSet);
+begin
+  inherited;
+
+  IniPant;
+
+end;
+
+procedure TfrCons_Tarea.qrCodigoAfterOpen(DataSet: TDataSet);
+begin
+  inherited;
+
+   CargarDatos;
+
+end;
+
+end.

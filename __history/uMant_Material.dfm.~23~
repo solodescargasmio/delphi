@@ -1,0 +1,224 @@
+inherited frMant_Material: TfrMant_Material
+  Caption = 'frMant_Material'
+  ClientHeight = 280
+  ClientWidth = 476
+  ExplicitWidth = 492
+  ExplicitHeight = 319
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnParametros: TPanel
+    inherited Image1: TImage
+      Left = 324
+      Top = 1
+      Height = 103
+      ExplicitLeft = 324
+      ExplicitTop = 1
+      ExplicitHeight = 103
+    end
+    inherited edCodigo: TLabeledEdit
+      Left = 88
+      EditLabel.Width = 71
+      EditLabel.Caption = 'ID Material'
+      EditLabel.ExplicitLeft = 14
+      EditLabel.ExplicitTop = 47
+      EditLabel.ExplicitWidth = 71
+      EditLabel.ExplicitHeight = 16
+      OnChange = edCodigoChange
+      OnKeyPress = edCodigoKeyPress
+      ExplicitLeft = 88
+    end
+    inherited mk_Ci: TMaskEdit
+      Visible = False
+    end
+    inherited pnAyuda: TPanel
+      Left = 56
+      Top = 72
+      ExplicitLeft = 56
+      ExplicitTop = 72
+    end
+  end
+  inherited pnBody: TPanel
+    Top = 125
+    ExplicitTop = 125
+    object txMedida: TDBText [0]
+      Left = 348
+      Top = 23
+      Width = 65
+      Height = 17
+      DataField = 'Nombre'
+      DataSource = suMedida
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    inherited edNombre: TLabeledEdit
+      Left = 88
+      Top = 22
+      EditLabel.Width = 44
+      EditLabel.Font.Style = [fsBold]
+      EditLabel.ParentFont = False
+      EditLabel.ExplicitLeft = 41
+      EditLabel.ExplicitTop = 26
+      EditLabel.ExplicitWidth = 44
+      ExplicitLeft = 88
+      ExplicitTop = 22
+    end
+    inherited edApellido: TLabeledEdit
+      Left = 276
+      EditLabel.ExplicitLeft = 236
+      EditLabel.ExplicitTop = 109
+      EditLabel.ExplicitWidth = 37
+      Visible = False
+      ExplicitLeft = 276
+    end
+    inherited edDireccion: TLabeledEdit
+      Left = 312
+      Top = 22
+      Width = 30
+      EditLabel.Width = 57
+      EditLabel.Caption = 'ID Medida'
+      EditLabel.Font.Style = [fsBold]
+      EditLabel.ParentFont = False
+      EditLabel.ExplicitLeft = 252
+      EditLabel.ExplicitTop = 26
+      EditLabel.ExplicitWidth = 57
+      NumbersOnly = True
+      OnKeyPress = edDireccionKeyPress
+      OnMouseEnter = edDireccionMouseEnter
+      OnMouseLeave = edDireccionMouseLeave
+      ExplicitLeft = 312
+      ExplicitTop = 22
+      ExplicitWidth = 30
+    end
+    inherited edCiudad: TLabeledEdit
+      Top = 105
+      EditLabel.ExplicitLeft = 240
+      EditLabel.ExplicitTop = 109
+      EditLabel.ExplicitWidth = 33
+      Visible = False
+      ExplicitTop = 105
+    end
+    inherited edTelefono: TLabeledEdit
+      Visible = False
+    end
+    inherited mk_Documento: TMaskEdit
+      Left = 275
+      Top = 105
+      Visible = False
+      ExplicitLeft = 275
+      ExplicitTop = 105
+    end
+    object Panel1: TPanel
+      Left = 275
+      Top = 46
+      Width = 105
+      Height = 37
+      Caption = '&F1 Ayuda'
+      Color = clInfoBk
+      ParentBackground = False
+      TabOrder = 8
+      Visible = False
+    end
+  end
+  inherited pnPie: TPanel
+    Left = -15
+    Top = 218
+    Width = 523
+    Height = 56
+    Anchors = [akLeft, akRight, akBottom]
+    ExplicitLeft = -15
+    ExplicitTop = 174
+    ExplicitWidth = 523
+    ExplicitHeight = 56
+    inherited btnActualizar: TButton
+      Left = 290
+      OnClick = btnActualizarClick
+      ExplicitLeft = 290
+    end
+    inherited btnCancelar: TButton
+      Left = 402
+      ExplicitLeft = 402
+    end
+  end
+  inherited FDQuery1: TFDQuery
+    AfterOpen = FDQuery1AfterOpen
+    SQL.Strings = (
+      'select * '
+      'from material'
+      'where id=:paId ')
+    Left = 208
+    Top = 104
+    ParamData = <
+      item
+        Name = 'PAID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object FDQuery1id: TIntegerField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object FDQuery1Nombre: TStringField
+      FieldName = 'Nombre'
+      Origin = 'Nombre'
+      Required = True
+      Size = 50
+    end
+    object FDQuery1idMedida: TIntegerField
+      FieldName = 'idMedida'
+      Origin = 'idMedida'
+      Required = True
+    end
+  end
+  inherited DataSource1: TDataSource
+    Left = 216
+    Top = 160
+  end
+  inherited dpGeneral: TDataSetProvider
+    Top = 320
+  end
+  object qrMedida: TFDQuery
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select * '
+      'from material'
+      'where id=:paId ')
+    Left = 416
+    Top = 56
+    ParamData = <
+      item
+        Name = 'PAID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object qrMedidaid: TIntegerField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object qrMedidaNombre: TStringField
+      FieldName = 'Nombre'
+      Origin = 'Nombre'
+      Required = True
+      Size = 50
+    end
+    object qrMedidaidMedida: TIntegerField
+      FieldName = 'idMedida'
+      Origin = 'idMedida'
+      Required = True
+    end
+  end
+  object suMedida: TDataSource
+    DataSet = qrMedida
+    Left = 408
+    Top = 104
+  end
+end

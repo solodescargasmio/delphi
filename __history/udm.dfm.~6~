@@ -1,0 +1,41 @@
+object frConexion: TfrConexion
+  Left = 0
+  Top = 0
+  Caption = 'Conexion'
+  ClientHeight = 365
+  ClientWidth = 331
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object cbdMysql: TFDConnection
+    Params.Strings = (
+      'Database=tapiceria'
+      'User_Name=root'
+      'DriverID=MySQL')
+    LoginPrompt = False
+    Left = 72
+    Top = 40
+  end
+  object cbdSQLite: TFDConnection
+    Left = 216
+    Top = 32
+  end
+  object FDQuery1: TFDQuery
+    Connection = cbdMysql
+    SQL.Strings = (
+      'select * from cliente')
+    Left = 64
+    Top = 128
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 168
+    Top = 136
+  end
+end

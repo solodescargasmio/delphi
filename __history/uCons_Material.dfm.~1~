@@ -1,0 +1,28 @@
+inherited frConsultaMateriales: TfrConsultaMateriales
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Consulta Materiales'
+  ClientHeight = 506
+  ClientWidth = 541
+  FormStyle = fsMDIChild
+  Visible = True
+  WindowState = wsNormal
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnParametros: TPanel
+    Width = 541
+    Height = 186
+    inherited Image1: TImage
+      Left = 404
+      Top = 10
+    end
+  end
+  inherited pnDatos: TPanel
+    Width = 541
+    Height = 283
+  end
+  inherited pnPie: TPanel
+    Width = 554
+    Height = 60
+  end
+end

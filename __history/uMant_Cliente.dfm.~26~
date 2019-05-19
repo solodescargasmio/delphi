@@ -1,0 +1,171 @@
+inherited frMant_Cliente: TfrMant_Cliente
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Mantenimiento Cliente'
+  ClientHeight = 428
+  ClientWidth = 544
+  ExplicitWidth = 550
+  ExplicitHeight = 457
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnParametros: TPanel
+    Height = 95
+    ExplicitHeight = 95
+    inherited edCodigo: TLabeledEdit
+      Left = 88
+      Top = 38
+      EditLabel.ExplicitLeft = 23
+      EditLabel.ExplicitTop = 40
+      EditLabel.ExplicitWidth = 62
+      EditLabel.ExplicitHeight = 16
+      OnKeyDown = edCodigoKeyDown
+      OnKeyPress = edCodigoKeyPress
+      ExplicitLeft = 88
+      ExplicitTop = 38
+    end
+    inherited mk_Ci: TMaskEdit
+      Visible = False
+    end
+  end
+  inherited pnBody: TPanel
+    Top = 88
+    Height = 305
+    ExplicitTop = 88
+    ExplicitHeight = 305
+    inherited edNombre: TLabeledEdit
+      Left = 80
+      Top = 109
+      EditLabel.ExplicitLeft = 40
+      EditLabel.ExplicitTop = 113
+      EditLabel.ExplicitWidth = 37
+      OnKeyPress = edNombreKeyPress
+      ExplicitLeft = 80
+      ExplicitTop = 109
+    end
+    inherited edApellido: TLabeledEdit
+      Left = 80
+      Top = 184
+      EditLabel.ExplicitLeft = 40
+      EditLabel.ExplicitTop = 188
+      EditLabel.ExplicitWidth = 37
+      OnKeyPress = edApellidoKeyPress
+      ExplicitLeft = 80
+      ExplicitTop = 184
+    end
+    inherited edDireccion: TLabeledEdit
+      Left = 297
+      Top = 47
+      EditLabel.ExplicitLeft = 251
+      EditLabel.ExplicitTop = 51
+      EditLabel.ExplicitWidth = 43
+      OnKeyPress = edDireccionKeyPress
+      ExplicitLeft = 297
+      ExplicitTop = 47
+    end
+    inherited edCiudad: TLabeledEdit
+      Left = 300
+      Top = 109
+      EditLabel.ExplicitLeft = 264
+      EditLabel.ExplicitTop = 113
+      EditLabel.ExplicitWidth = 33
+      OnKeyPress = edCiudadKeyPress
+      ExplicitLeft = 300
+      ExplicitTop = 109
+    end
+    inherited edTelefono: TLabeledEdit
+      Left = 300
+      Top = 184
+      EditLabel.ExplicitLeft = 255
+      EditLabel.ExplicitTop = 188
+      EditLabel.ExplicitWidth = 42
+      OnKeyPress = edTelefonoKeyPress
+      ExplicitLeft = 300
+      ExplicitTop = 184
+    end
+    inherited mk_Documento: TMaskEdit
+      Left = 80
+      Top = 47
+      Text = ''
+      Visible = False
+      OnKeyPress = mk_DocumentoKeyPress
+      ExplicitLeft = 80
+      ExplicitTop = 47
+    end
+    object edDocumento: TLabeledEdit
+      Left = 80
+      Top = 47
+      Width = 121
+      Height = 21
+      EditLabel.Width = 54
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Documento'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      LabelPosition = lpLeft
+      ParentFont = False
+      TabOrder = 8
+      OnKeyPress = edNombreKeyPress
+    end
+  end
+  inherited pnPie: TPanel
+    Width = 591
+    Height = 60
+    ExplicitWidth = 591
+    ExplicitHeight = 60
+    inherited btnActualizar: TButton
+      OnClick = btnActualizarClick
+    end
+    inherited btnCancelar: TButton
+      OnClick = btnCancelarClick
+    end
+  end
+  inherited qrCodigo: TFDQuery
+    AfterOpen = qrCodigoAfterOpen
+    AfterClose = qrCodigoAfterClose
+    object qrCodigoid: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object qrCodigoCI: TStringField
+      FieldName = 'CI'
+      Origin = 'CI'
+      Required = True
+      Size = 11
+    end
+    object qrCodigoNombre: TStringField
+      FieldName = 'Nombre'
+      Origin = 'Nombre'
+      Required = True
+      Size = 50
+    end
+    object qrCodigoApellido: TStringField
+      FieldName = 'Apellido'
+      Origin = 'Apellido'
+      Required = True
+      Size = 50
+    end
+    object qrCodigoDireccion: TStringField
+      FieldName = 'Direccion'
+      Origin = 'Direccion'
+      Required = True
+      Size = 50
+    end
+    object qrCodigoCiudad: TStringField
+      FieldName = 'Ciudad'
+      Origin = 'Ciudad'
+      Required = True
+      Size = 50
+    end
+    object qrCodigoTelefono: TStringField
+      FieldName = 'Telefono'
+      Origin = 'Telefono'
+      Required = True
+      Size = 50
+    end
+  end
+end

@@ -1,0 +1,7 @@
+inherited frCant_MaterialUt: TfrCant_MaterialUt
+  Caption = 'Cantidad Materiales Utilizados'
+  ExplicitWidth = 547
+  ExplicitHeight = 535
+  PixelsPerInch = 96
+  TextHeight = 13
+end

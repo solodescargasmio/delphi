@@ -1,0 +1,551 @@
+inherited frCons_Tarea: TfrCons_Tarea
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Consultar Tareas'
+  ClientHeight = 571
+  ClientWidth = 948
+  FormStyle = fsMDIChild
+  Visible = True
+  WindowState = wsNormal
+  ExplicitWidth = 954
+  ExplicitHeight = 600
+  PixelsPerInch = 96
+  TextHeight = 13
+  object pnImgTotal: TPanel [0]
+    Left = -12
+    Top = 8
+    Width = 805
+    Height = 561
+    TabOrder = 3
+    Visible = False
+    object imgTotal: TImage
+      Left = 24
+      Top = 8
+      Width = 729
+      Height = 441
+      Stretch = True
+    end
+    object Button2: TButton
+      Left = 644
+      Top = 504
+      Width = 109
+      Height = 25
+      Caption = 'Salir Imagen Total'
+      TabOrder = 0
+      OnClick = Button2Click
+    end
+  end
+  inherited pnParametros: TPanel
+    Width = 948
+    Height = 251
+    ExplicitWidth = 948
+    ExplicitHeight = 251
+    inherited Image1: TImage
+      Left = 747
+      Top = 8
+      Width = 201
+      Height = 213
+      ExplicitLeft = 747
+      ExplicitTop = 8
+      ExplicitWidth = 201
+      ExplicitHeight = 213
+    end
+    inherited edCodigo: TLabeledEdit
+      Top = 24
+      EditLabel.ExplicitLeft = 122
+      EditLabel.ExplicitTop = 26
+      EditLabel.ExplicitWidth = 43
+      EditLabel.ExplicitHeight = 16
+      OnKeyDown = edCodigoKeyDown
+      OnKeyPress = edCodigoKeyPress
+      ExplicitTop = 24
+    end
+    inherited pnPeriodo: TPanel
+      Left = 168
+      Top = 75
+      ExplicitLeft = 168
+      ExplicitTop = 75
+      inherited lblSeparador: TLabel
+        Visible = False
+      end
+      inherited dt_Fin: TDateTimePicker
+        Visible = False
+      end
+    end
+  end
+  inherited pnDatos: TPanel
+    Top = 167
+    Width = 948
+    Height = 348
+    ExplicitTop = 167
+    ExplicitWidth = 948
+    ExplicitHeight = 348
+    object Splitter2: TSplitter [0]
+      Left = 535
+      Top = 2
+      Width = 8
+      Height = 346
+      Align = alCustom
+    end
+    object Splitter3: TSplitter [1]
+      Left = 536
+      Top = 168
+      Width = 273
+      Height = 9
+      Align = alCustom
+    end
+    inherited grConsulta: TDBGrid
+      Left = -7
+      Top = 2
+      Width = 544
+      Height = 345
+      DataSource = suCodigo
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'Nombre'
+          Title.Caption = 'Vehiculo'
+          Width = 114
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Descripcion'
+          Width = 150
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'iniTarea'
+          Title.Caption = 'Inicio'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'finTarea'
+          Title.Caption = 'Fin'
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'Estado'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Presupuesto'
+          Visible = True
+        end>
+    end
+    object DBGrid1: TDBGrid
+      Left = 543
+      Top = 2
+      Width = 266
+      Height = 170
+      DataSource = suPresupuesto
+      TabOrder = 1
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'detalle'
+          Title.Caption = 'Detalle'
+          Width = 160
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Importe'
+          Visible = True
+        end>
+    end
+    object DBGrid2: TDBGrid
+      Left = 543
+      Top = 178
+      Width = 266
+      Height = 170
+      DataSource = suMaterial
+      TabOrder = 2
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'Nombre'
+          Title.Caption = 'Material Utillizado'
+          Width = 120
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Cantidad'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Medida'
+          Visible = True
+        end>
+    end
+    object pnImagen: TPanel
+      Left = 815
+      Top = -4
+      Width = 131
+      Height = 166
+      TabOrder = 3
+      object imgLista: TImage
+        Left = 0
+        Top = 7
+        Width = 129
+        Height = 121
+        Stretch = True
+      end
+      object btnSig: TButton
+        Left = 88
+        Top = 134
+        Width = 44
+        Height = 25
+        Caption = '>>>'
+        TabOrder = 0
+        OnClick = btnSigClick
+      end
+      object btnAnt: TButton
+        Left = 0
+        Top = 134
+        Width = 44
+        Height = 25
+        Caption = '<<<'
+        TabOrder = 1
+        OnClick = btnAntClick
+      end
+      object Button1: TButton
+        Left = 50
+        Top = 134
+        Width = 32
+        Height = 25
+        Caption = '[]'
+        TabOrder = 2
+        OnClick = Button1Click
+      end
+    end
+  end
+  inherited pnPie: TPanel
+    Left = 0
+    Top = 512
+    Width = 980
+    Height = 60
+    ExplicitLeft = 0
+    ExplicitTop = 512
+    ExplicitWidth = 980
+    ExplicitHeight = 60
+    inherited btnActualizar: TButton
+      Left = 771
+      OnClick = btnActualizarClick
+      ExplicitLeft = 771
+    end
+    inherited btnCancelar: TButton
+      Left = 869
+      OnClick = btnCancelarClick
+      ExplicitLeft = 869
+    end
+  end
+  inherited qrCodigo: TFDQuery
+    AfterOpen = qrCodigoAfterOpen
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select t.*, '
+      'concat(v.Marca,'#39' Patente: '#39',v.Matricula) as Nombre '
+      'from tarea t'
+      'inner join vehiculo v on v.id=t.idVehiculo'
+      'where t.id= :paId')
+    Top = 24
+    ParamData = <
+      item
+        Name = 'PAID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object qrCodigoid: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object qrCodigoidVehiculo: TIntegerField
+      FieldName = 'idVehiculo'
+      Origin = 'idVehiculo'
+      Required = True
+    end
+    object qrCodigoDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Origin = 'Descripcion'
+      Required = True
+      Size = 100
+    end
+    object qrCodigoComentario: TStringField
+      FieldName = 'Comentario'
+      Origin = 'Comentario'
+      Required = True
+      Size = 100
+    end
+    object qrCodigoPresupuesto: TSingleField
+      FieldName = 'Presupuesto'
+      Origin = 'Presupuesto'
+      Required = True
+    end
+    object qrCodigoiniTarea: TDateField
+      FieldName = 'iniTarea'
+      Origin = 'iniTarea'
+      Required = True
+    end
+    object qrCodigofinTarea: TDateField
+      FieldName = 'finTarea'
+      Origin = 'finTarea'
+      Required = True
+    end
+    object qrCodigoEstado: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Estado'
+      Origin = 'Estado'
+      Size = 1
+    end
+    object qrCodigoNombre: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Nombre'
+      Origin = 'Nombre'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 70
+    end
+  end
+  inherited suCodigo: TDataSource
+    DataSet = clTarea
+  end
+  inherited FDQuery1: TFDQuery
+    Connection = con.Mysql
+  end
+  inherited clIndividual: TClientDataSet
+    object clIndividualid: TAutoIncField
+      FieldName = 'id'
+      ReadOnly = True
+    end
+    object clIndividualidVehiculo: TIntegerField
+      FieldName = 'idVehiculo'
+      Required = True
+    end
+    object clIndividualDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Required = True
+      Size = 100
+    end
+    object clIndividualComentario: TStringField
+      FieldName = 'Comentario'
+      Required = True
+      Size = 100
+    end
+    object clIndividualPresupuesto: TSingleField
+      FieldName = 'Presupuesto'
+      Required = True
+      DisplayFormat = '###,###,##0.00'
+      EditFormat = '#########.##'
+    end
+    object clIndividualiniTarea: TDateField
+      FieldName = 'iniTarea'
+      Required = True
+    end
+    object clIndividualfinTarea: TDateField
+      FieldName = 'finTarea'
+      Required = True
+    end
+    object clIndividualEstado: TStringField
+      FieldName = 'Estado'
+      Size = 1
+    end
+    object clIndividualNombre: TStringField
+      FieldName = 'Nombre'
+      ReadOnly = True
+      Size = 70
+    end
+  end
+  inherited dpIndividual: TDataSetProvider
+    DataSet = qrCodigo
+  end
+  object clTarea: TClientDataSet
+    PersistDataPacket.Data = {
+      9F0000009619E0BD0100000018000000060000000000030000009F00064E6F6D
+      627265010049000000010005574944544802000200C8000B4465736372697063
+      696F6E010049000000010005574944544802000200C8000645737461646F0100
+      490000000100055749445448020002000A0006496E6963696F04000600000000
+      000346696E04000600000000000B507265737570756573746F08000400000000
+      000000}
+    Active = True
+    Aggregates = <>
+    Params = <>
+    Left = 248
+    Top = 17
+    object clTareaNombre: TStringField
+      FieldName = 'Nombre'
+      Size = 200
+    end
+    object clTareaDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 200
+    end
+    object clTareaEstado: TStringField
+      FieldName = 'Estado'
+      Size = 10
+    end
+    object clTareaInicio: TDateField
+      FieldName = 'Inicio'
+    end
+    object clTareaFin: TDateField
+      FieldName = 'Fin'
+    end
+    object clTareaPresupuesto: TFloatField
+      FieldName = 'Presupuesto'
+      DisplayFormat = '###,###,##0.00'
+      EditFormat = '#########.##'
+    end
+  end
+  object ClientDataSet2: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 416
+    Top = 17
+  end
+  object ClientDataSet3: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 552
+    Top = 17
+  end
+  object qrImagen: TFDQuery
+    Connection = con.Mysql
+    SQL.Strings = (
+      'SELECT * FROM imagen_tarea'
+      'Where idTarea=:paIdT ')
+    Left = 1040
+    Top = 264
+    ParamData = <
+      item
+        Name = 'PAIDT'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object qrImagenid: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object qrImagenidTarea: TIntegerField
+      FieldName = 'idTarea'
+      Origin = 'idTarea'
+      Required = True
+    end
+    object qrImagenDireccion: TStringField
+      FieldName = 'Direccion'
+      Origin = 'Direccion'
+      Required = True
+      Size = 100
+    end
+    object qrImagenNombre: TStringField
+      FieldName = 'Nombre'
+      Origin = 'Nombre'
+      Required = True
+      Size = 50
+    end
+  end
+  object qrPresupuesto: TFDQuery
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select * '
+      'from detalle_presupuesto '
+      'where idTarea=:paIdT')
+    Left = 632
+    Top = 88
+    ParamData = <
+      item
+        Name = 'PAIDT'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 1
+      end>
+    object qrPresupuestoidTarea: TIntegerField
+      FieldName = 'idTarea'
+      Origin = 'idTarea'
+      Required = True
+    end
+    object qrPresupuestodetalle: TStringField
+      FieldName = 'detalle'
+      Origin = 'detalle'
+      Required = True
+      Size = 100
+    end
+    object qrPresupuestoImporte: TSingleField
+      FieldName = 'Importe'
+      Origin = 'Importe'
+      Required = True
+      DisplayFormat = '###,##0.00'
+      EditFormat = '#######0.00'
+    end
+  end
+  object suPresupuesto: TDataSource
+    DataSet = qrPresupuesto
+    Left = 632
+    Top = 136
+  end
+  object qrMaterial: TFDQuery
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select ms.Cantidad,m.Nombre,md.Nombre as Medida '
+      'from materiales ms'
+      'inner join material m on ms.idMaterial=m.id '
+      'inner join medida md on md.id=m.idMedida'
+      'where ms.idTarea=:paIdT')
+    Left = 632
+    Top = 368
+    ParamData = <
+      item
+        Name = 'PAIDT'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 1
+      end>
+    object qrMaterialCantidad: TSingleField
+      FieldName = 'Cantidad'
+      Origin = 'Cantidad'
+      Required = True
+    end
+    object qrMaterialNombre: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Nombre'
+      Origin = 'Nombre'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 50
+    end
+    object qrMaterialMedida: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Medida'
+      Origin = 'Nombre'
+      ProviderFlags = []
+      ReadOnly = True
+    end
+  end
+  object suMaterial: TDataSource
+    DataSet = qrMaterial
+    Left = 632
+    Top = 416
+  end
+end

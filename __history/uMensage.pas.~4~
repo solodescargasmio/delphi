@@ -1,0 +1,22 @@
+unit uMensage;
+
+interface
+uses windows;
+procedure MsgError(owner: HWND;Titulo :string ;Mensaje :string);
+procedure MsgAviso(owner: HWND;Titulo :string ;Mensaje :string);
+
+implementation
+procedure MsgError(owner: HWND;Titulo,Mensaje: string);
+begin
+  MessageBox(owner,PWideChar(Mensaje),PWideChar(Titulo),MB_OK or MB_ICONERROR);
+end;
+
+procedure MsgAviso(owner: HWND;Titulo,Mensaje: string);
+begin
+  MessageBox(owner,PWideChar(Mensaje),PWideChar(Titulo),MB_OK or MB_ICONINFORMATION);
+end;
+
+end.
+
+
+

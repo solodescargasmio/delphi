@@ -1,0 +1,195 @@
+inherited frCons_Cliente: TfrCons_Cliente
+  BorderIcons = [biSystemMenu, biMinimize]
+  Caption = 'Consulta Cliente'
+  ClientWidth = 760
+  FormStyle = fsMDIChild
+  Visible = True
+  WindowState = wsNormal
+  ExplicitLeft = -189
+  ExplicitTop = 5
+  ExplicitWidth = 776
+  ExplicitHeight = 535
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnParametros: TPanel
+    Width = 760
+    ExplicitWidth = 760
+    inherited Image1: TImage
+      Left = 623
+      ExplicitLeft = 498
+    end
+    inherited rgFecha: TRadioGroup
+      Visible = False
+    end
+    inherited edCodigo: TLabeledEdit
+      Left = 120
+      Top = 53
+      Width = 253
+      EditLabel.Width = 214
+      EditLabel.Caption = 'Buscar por Documento o Apellido'
+      EditLabel.ExplicitLeft = 120
+      EditLabel.ExplicitTop = 34
+      EditLabel.ExplicitWidth = 214
+      EditLabel.ExplicitHeight = 16
+      LabelPosition = lpAbove
+      OnKeyPress = edCodigoKeyPress
+      ExplicitLeft = 120
+      ExplicitTop = 53
+      ExplicitWidth = 253
+    end
+    inherited pnPeriodo: TPanel
+      Visible = False
+    end
+  end
+  inherited pnDatos: TPanel
+    Width = 760
+    ExplicitWidth = 760
+    inherited grConsulta: TDBGrid
+      Width = 463
+      DataSource = suCodigo
+      OnKeyUp = grConsultaKeyUp
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'CI'
+          Title.Caption = 'Documento'
+          Width = 58
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Nombre'
+          Width = 150
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Direccion'
+          Title.Caption = 'Direcci'#243'n'
+          Width = 180
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Telefono'
+          Width = 60
+          Visible = True
+        end>
+    end
+    object DBGrid1: TDBGrid
+      Left = 469
+      Top = 0
+      Width = 284
+      Height = 138
+      DataSource = suVehiculo
+      TabOrder = 1
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      OnKeyUp = DBGrid1KeyUp
+    end
+    object DBGrid2: TDBGrid
+      Left = 469
+      Top = 144
+      Width = 284
+      Height = 129
+      DataSource = DataSource1
+      TabOrder = 2
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+    end
+  end
+  inherited pnPie: TPanel
+    Width = 773
+    ExplicitWidth = 773
+    inherited btnCancelar: TButton
+      OnClick = btnCancelarClick
+    end
+  end
+  inherited qrCodigo: TFDQuery
+    AfterOpen = qrCodigoAfterOpen
+    AfterClose = qrCodigoAfterClose
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select id,CI,concat(Nombre,'#39' '#39',Apellido) as Nombre,'
+      'concat(Direccion,'#39' '#39',Ciudad) as Direccion, Telefono '
+      'from cliente')
+    object qrCodigoid: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object qrCodigoCI: TStringField
+      FieldName = 'CI'
+      Origin = 'CI'
+      Required = True
+    end
+    object qrCodigoNombre: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Nombre'
+      Origin = 'Nombre'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 101
+    end
+    object qrCodigoDireccion: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Direccion'
+      Origin = 'Direccion'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 101
+    end
+    object qrCodigoTelefono: TStringField
+      FieldName = 'Telefono'
+      Origin = 'Telefono'
+      Required = True
+      Size = 50
+    end
+  end
+  inherited suCodigo: TDataSource
+    DataSet = qrCodigo
+  end
+  inherited FDQuery1: TFDQuery
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select * from tarea where idVehiculo=:paId')
+    ParamData = <
+      item
+        Name = 'PAID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
+  inherited dpGeneral: TDataSetProvider
+    Left = 408
+    Top = 304
+  end
+  object qrVehiculo: TFDQuery
+    AfterOpen = qrVehiculoAfterOpen
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select * from vehiculo where idCliente=:paId')
+    Left = 536
+    Top = 104
+    ParamData = <
+      item
+        Name = 'PAID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
+  object suVehiculo: TDataSource
+    DataSet = qrVehiculo
+    Left = 600
+    Top = 104
+  end
+end

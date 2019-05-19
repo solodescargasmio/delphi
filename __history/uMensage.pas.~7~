@@ -1,0 +1,37 @@
+unit uMensage;
+
+interface
+uses windows;
+procedure MsgError(owner: HWND;Titulo :string ;Mensaje :string);
+procedure MsgAviso(owner: HWND;Titulo :string ;Mensaje :string);
+function MsgConfirmacion(owner: HWND;Titulo :string ;Mensaje :string):Boolean;
+
+implementation
+procedure MsgError(owner: HWND;Mensaje: string);
+begin
+
+  MessageBox(owner,PWideChar(Mensaje),'Error',MB_OK or MB_ICONERROR);
+
+end;
+
+procedure MsgAviso(owner: HWND;Mensaje: string);
+begin
+
+  MessageBox(owner,PWideChar(Mensaje),'Informacion',MB_OK or MB_ICONINFORMATION);
+
+end;
+
+function MsgConfirmacion(owner: HWND;Mensaje: string):Boolean;
+var
+  lOk:Boolean;
+begin
+
+  lOk:=MessageBox(owner,PWideChar(Mensaje),'Confirmacion',MB_ICONQUESTION or MB_YESNO or MB_TASKMODAL) = IDYES;
+  Result:=lOk;
+
+end;
+
+end.
+
+
+

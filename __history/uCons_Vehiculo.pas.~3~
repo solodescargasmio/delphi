@@ -1,0 +1,62 @@
+unit uCons_Vehiculo;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uBase_Consulta, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Datasnap.Provider, Datasnap.DBClient,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Grids,
+  Vcl.DBGrids, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.Imaging.jpeg;
+
+type
+  TfrCons_Vehiculo = class(TfrBase_Consulta)
+    procedure FormActivate(Sender: TObject);
+    procedure edCodigoKeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frCons_Vehiculo: TfrCons_Vehiculo;
+
+implementation
+
+{$R *.dfm}
+
+uses udm;
+
+procedure TfrCons_Vehiculo.edCodigoKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+
+   FDQuery1.Close;
+  with FDQuery1 do
+  begin
+    SQL.Clear;
+    SQL.Text := 'select id,Matricula,Marca,Anio '+
+                ' from vehiculo '+
+                ' where Matricula like "%'+edCodigo.Text+'%" or '+
+                ' Marca like "%'+edCodigo.Text+'%" or '+
+                ' Anio like "%'+edCodigo.Text+'%"';
+
+    Open;
+  end;
+
+
+
+end;
+
+procedure TfrCons_Vehiculo.FormActivate(Sender: TObject);
+begin
+  inherited;
+
+  qrCodigo.Open;
+
+end;
+
+end.

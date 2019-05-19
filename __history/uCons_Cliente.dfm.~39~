@@ -1,0 +1,333 @@
+inherited frCons_Cliente: TfrCons_Cliente
+  BorderIcons = [biSystemMenu, biMinimize]
+  Caption = 'Consulta Cliente'
+  ClientWidth = 831
+  FormStyle = fsMDIChild
+  Visible = True
+  WindowState = wsNormal
+  ExplicitLeft = -269
+  ExplicitWidth = 847
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnParametros: TPanel
+    Width = 831
+    ExplicitWidth = 760
+    inherited Image1: TImage
+      Left = 580
+      Width = 251
+      Height = 169
+      ExplicitLeft = 509
+      ExplicitWidth = 251
+      ExplicitHeight = 169
+    end
+    inherited rgFecha: TRadioGroup
+      Visible = False
+    end
+    inherited edCodigo: TLabeledEdit
+      Left = 95
+      Top = 70
+      Width = 253
+      EditLabel.Width = 214
+      EditLabel.Caption = 'Buscar por Documento o Apellido'
+      EditLabel.ExplicitLeft = 95
+      EditLabel.ExplicitTop = 51
+      EditLabel.ExplicitWidth = 214
+      EditLabel.ExplicitHeight = 16
+      LabelPosition = lpAbove
+      OnKeyPress = edCodigoKeyPress
+      ExplicitLeft = 95
+      ExplicitTop = 70
+      ExplicitWidth = 253
+    end
+    inherited pnPeriodo: TPanel
+      Visible = False
+    end
+  end
+  inherited pnDatos: TPanel
+    Width = 831
+    ExplicitWidth = 760
+    inherited grConsulta: TDBGrid
+      Width = 529
+      DataSource = suCodigo
+      OnKeyUp = grConsultaKeyUp
+      Columns = <
+        item
+          Color = clActiveBorder
+          Expanded = False
+          FieldName = 'CI'
+          Title.Caption = 'Documento'
+          Width = 70
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Nombre'
+          Width = 160
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Direccion'
+          Title.Caption = 'Direcci'#243'n'
+          Width = 180
+          Visible = True
+        end
+        item
+          Color = clActiveBorder
+          Expanded = False
+          FieldName = 'Telefono'
+          Width = 100
+          Visible = True
+        end>
+    end
+    object DBGrid1: TDBGrid
+      Left = 535
+      Top = 0
+      Width = 296
+      Height = 138
+      DataSource = suVehiculo
+      TabOrder = 1
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      OnKeyUp = DBGrid1KeyUp
+      Columns = <
+        item
+          Color = clActiveBorder
+          Expanded = False
+          FieldName = 'Matricula'
+          Title.Color = clWhite
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Marca'
+          Width = 150
+          Visible = True
+        end
+        item
+          Color = clActiveBorder
+          Expanded = False
+          FieldName = 'Anio'
+          Title.Caption = 'A'#241'o'
+          Width = 50
+          Visible = True
+        end>
+    end
+    object DBGrid2: TDBGrid
+      Left = 535
+      Top = 144
+      Width = 296
+      Height = 129
+      DataSource = DataSource1
+      TabOrder = 2
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'Descripcion'
+          Title.Caption = 'Tarea'
+          Width = 150
+          Visible = True
+        end
+        item
+          Color = clActiveBorder
+          Expanded = False
+          FieldName = 'Presupuesto'
+          Visible = True
+        end
+        item
+          Color = clMoneyGreen
+          Expanded = False
+          FieldName = 'iniTarea'
+          Title.Caption = 'Inicio'
+          Visible = True
+        end>
+    end
+  end
+  inherited pnPie: TPanel
+    Width = 844
+    ExplicitWidth = 773
+    inherited btnActualizar: TButton
+      Left = 641
+      ExplicitLeft = 641
+    end
+    inherited btnCancelar: TButton
+      Left = 762
+      OnClick = btnCancelarClick
+      ExplicitLeft = 762
+    end
+  end
+  inherited qrCodigo: TFDQuery
+    AfterOpen = qrCodigoAfterOpen
+    AfterClose = qrCodigoAfterClose
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select id,CI,concat(Nombre,'#39' '#39',Apellido) as Nombre,'
+      'concat(Direccion,'#39' '#39',Ciudad) as Direccion, Telefono '
+      'from cliente')
+    object qrCodigoid: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object qrCodigoCI: TStringField
+      FieldName = 'CI'
+      Origin = 'CI'
+      Required = True
+    end
+    object qrCodigoNombre: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Nombre'
+      Origin = 'Nombre'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 101
+    end
+    object qrCodigoDireccion: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Direccion'
+      Origin = 'Direccion'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 101
+    end
+    object qrCodigoTelefono: TStringField
+      FieldName = 'Telefono'
+      Origin = 'Telefono'
+      Required = True
+      Size = 50
+    end
+  end
+  inherited suCodigo: TDataSource
+    DataSet = qrCodigo
+  end
+  inherited FDQuery1: TFDQuery
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select * from tarea where idVehiculo=:paId')
+    ParamData = <
+      item
+        Name = 'PAID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object FDQuery1id: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object FDQuery1idVehiculo: TIntegerField
+      FieldName = 'idVehiculo'
+      Origin = 'idVehiculo'
+      Required = True
+    end
+    object FDQuery1Descripcion: TStringField
+      FieldName = 'Descripcion'
+      Origin = 'Descripcion'
+      Required = True
+      Size = 100
+    end
+    object FDQuery1Comentario: TStringField
+      FieldName = 'Comentario'
+      Origin = 'Comentario'
+      Required = True
+      Size = 100
+    end
+    object FDQuery1Presupuesto: TSingleField
+      FieldName = 'Presupuesto'
+      Origin = 'Presupuesto'
+      Required = True
+    end
+    object FDQuery1iniTarea: TDateField
+      FieldName = 'iniTarea'
+      Origin = 'iniTarea'
+      Required = True
+    end
+    object FDQuery1finTarea: TDateField
+      FieldName = 'finTarea'
+      Origin = 'finTarea'
+      Required = True
+    end
+    object FDQuery1Estado: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Estado'
+      Origin = 'Estado'
+      Size = 1
+    end
+  end
+  inherited dpGeneral: TDataSetProvider
+    Left = 408
+    Top = 304
+  end
+  object qrVehiculo: TFDQuery
+    AfterOpen = qrVehiculoAfterOpen
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select * from vehiculo where idCliente=:paId')
+    Left = 536
+    Top = 104
+    ParamData = <
+      item
+        Name = 'PAID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object qrVehiculoid: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object qrVehiculoMatricula: TStringField
+      FieldName = 'Matricula'
+      Origin = 'Matricula'
+      Required = True
+      Size = 10
+    end
+    object qrVehiculoidCliente: TIntegerField
+      FieldName = 'idCliente'
+      Origin = 'idCliente'
+      Required = True
+    end
+    object qrVehiculoTipo: TStringField
+      FieldName = 'Tipo'
+      Origin = 'Tipo'
+      Required = True
+      Size = 50
+    end
+    object qrVehiculoMarca: TStringField
+      FieldName = 'Marca'
+      Origin = 'Marca'
+      Required = True
+      Size = 50
+    end
+    object qrVehiculoAnio: TStringField
+      FieldName = 'Anio'
+      Origin = 'Anio'
+      Required = True
+      Size = 4
+    end
+    object qrVehiculoDescripcion: TMemoField
+      FieldName = 'Descripcion'
+      Origin = 'Descripcion'
+      Required = True
+      BlobType = ftMemo
+    end
+  end
+  object suVehiculo: TDataSource
+    DataSet = qrVehiculo
+    Left = 600
+    Top = 104
+  end
+end

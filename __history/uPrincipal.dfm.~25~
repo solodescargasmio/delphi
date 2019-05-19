@@ -1,0 +1,110 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Anchors = [akLeft, akTop, akRight, akBottom]
+  Caption = 'Tapiceria Principal'
+  ClientHeight = 221
+  ClientWidth = 331
+  Color = clHighlight
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIForm
+  Menu = MainMenu1
+  OldCreateOrder = False
+  WindowState = wsMaximized
+  OnActivate = FormActivate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Fondo: TImage
+    Left = 0
+    Top = 0
+    Width = 337
+    Height = 217
+  end
+  object MainMenu1: TMainMenu
+    Left = 192
+    Top = 72
+    object Cliente1: TMenuItem
+      Caption = 'Cliente'
+      object Otracosa1: TMenuItem
+        Action = Action1Cons_Cliente
+      end
+      object Mantenimiento1: TMenuItem
+        Action = Action2Mant_Cliente
+      end
+    end
+    object Vehiculo1: TMenuItem
+      Caption = 'Vehiculo'
+      object Consulta1: TMenuItem
+        Action = Action8Cons_Vehiculo
+      end
+      object Mantenimiento2: TMenuItem
+        Action = Action3Mant_Vehiculo
+      end
+    end
+    object area1: TMenuItem
+      Caption = 'Tarea'
+      object Consulta2: TMenuItem
+        Action = Action5Cons_Tarea
+      end
+      object MantenimientTarea1: TMenuItem
+        Action = Action4Mant_Tarea
+      end
+    end
+    object Mantenimiento3: TMenuItem
+      Caption = 'Mantenimiento'
+      object Medidas1: TMenuItem
+        Action = Action6Mant_Medida
+      end
+      object Materiales1: TMenuItem
+        Action = Action7Mant_Material
+      end
+    end
+    object Prueba1: TMenuItem
+      Action = Action8Preuba
+    end
+  end
+  object ListaMenu: TActionList
+    Left = 24
+    Top = 40
+    object Action1Cons_Cliente: TAction
+      Caption = 'Consulta'
+      OnExecute = Action1Cons_ClienteExecute
+    end
+    object Action2Mant_Cliente: TAction
+      Caption = 'Mantenimiento'
+      OnExecute = Action2Mant_ClienteExecute
+    end
+    object Action3Mant_Vehiculo: TAction
+      Caption = 'Mantenimiento'
+      OnExecute = Action3Mant_VehiculoExecute
+    end
+    object Action4Mant_Tarea: TAction
+      Caption = 'Mantenimiento'
+      OnExecute = Action4Mant_TareaExecute
+    end
+    object Action5Cons_Tarea: TAction
+      Caption = 'Consulta'
+      OnExecute = Action5Cons_TareaExecute
+    end
+    object Action6Mant_Medida: TAction
+      Caption = 'Medidas'
+      OnExecute = Action6Mant_MedidaExecute
+    end
+    object Action7Mant_Material: TAction
+      Caption = 'Materiales'
+      OnExecute = Action7Mant_MaterialExecute
+    end
+    object Action8Preuba: TAction
+      Caption = 'Prueba'
+      OnExecute = Action8PreubaExecute
+    end
+    object Action8Cons_Vehiculo: TAction
+      Caption = 'Consulta'
+      OnExecute = Action8Cons_VehiculoExecute
+    end
+  end
+end

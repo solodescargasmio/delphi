@@ -1,0 +1,36 @@
+unit uVerImagen;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls;
+
+type
+  TfrVerImagen = class(TForm)
+    Image1: TImage;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure CargarImagenes(img:String);
+  end;
+
+var
+  frVerImagen: TfrVerImagen;
+
+implementation
+
+{$R *.dfm}
+
+{ TForm2 }
+
+procedure TfrVerImagen.CargarImagenes(img: String);
+begin
+
+  if img<>'' then
+    Image1.Picture.LoadFromFile(img);
+
+end;
+
+end.

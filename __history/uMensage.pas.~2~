@@ -1,0 +1,13 @@
+unit uMensage;
+
+interface
+uses windows;
+procedure MsgError(Titulo :string ;Mensaje :string);
+
+
+implementation
+procedure MsgError( Mensaje: string);
+begin
+  MessageBox(Mensaje,Titulo,MB_OK or MB_ICONERROR);
+end;
+end.

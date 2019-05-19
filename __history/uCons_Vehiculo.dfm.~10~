@@ -1,0 +1,95 @@
+inherited frCons_Vehiculo: TfrCons_Vehiculo
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Consulta Vehiculos'
+  ClientHeight = 503
+  ClientWidth = 608
+  FormStyle = fsMDIChild
+  Visible = True
+  WindowState = wsNormal
+  ExplicitWidth = 614
+  ExplicitHeight = 532
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnParametros: TPanel
+    Width = 608
+    Height = 183
+    ExplicitWidth = 608
+    ExplicitHeight = 183
+    inherited Image1: TImage
+      Left = 471
+      Top = 7
+      ExplicitLeft = 414
+      ExplicitTop = 7
+    end
+    inherited rgFecha: TRadioGroup
+      Visible = False
+    end
+    inherited edCodigo: TLabeledEdit
+      Left = 130
+      Top = 70
+      Width = 233
+      EditLabel.Width = 230
+      EditLabel.Caption = 'BUSCAR MATRICULA, MARCA O A'#209'O'
+      EditLabel.ExplicitLeft = 130
+      EditLabel.ExplicitTop = 51
+      EditLabel.ExplicitWidth = 230
+      EditLabel.ExplicitHeight = 16
+      LabelPosition = lpAbove
+      OnKeyPress = edCodigoKeyPress
+      ExplicitLeft = 130
+      ExplicitTop = 70
+      ExplicitWidth = 233
+    end
+    inherited pnPeriodo: TPanel
+      Visible = False
+    end
+  end
+  inherited pnDatos: TPanel
+    Width = 608
+    Height = 280
+    ExplicitWidth = 608
+    ExplicitHeight = 280
+    inherited grConsulta: TDBGrid
+      Width = 289
+      DataSource = suCodigo
+    end
+  end
+  inherited pnPie: TPanel
+    Top = 439
+    Width = 621
+    Height = 65
+    ExplicitTop = 439
+    ExplicitWidth = 621
+    ExplicitHeight = 65
+    inherited btnActualizar: TButton
+      Left = 345
+      Top = 8
+      ExplicitLeft = 345
+      ExplicitTop = 8
+    end
+    inherited btnCancelar: TButton
+      Left = 458
+      Top = 8
+      ExplicitLeft = 458
+      ExplicitTop = 8
+    end
+  end
+  inherited qrCodigo: TFDQuery
+    AfterOpen = qrCodigoAfterOpen
+    Connection = con.Mysql
+    SQL.Strings = (
+      'select v.id,v.Matricula,v.Marca,v.Anio,'
+      'concat(c.Nombre,'#39' '#39',c.Apellido) as Nombre,'#13#10#10
+      
+        't.Descripcion,t.iniTarea,t.finTarea,sum(dp.Importe) as Presupues' +
+        'to'#10
+      'from vehiculo v'#13#10#10
+      'inner join cliente c on c.id=v.idCliente'#13#10#10
+      'left join tarea t on t.idVehiculo=v.id'#13#10#10
+      'left join detalle_presupuesto dp on dp.idTarea=t.id')
+  end
+  inherited suCodigo: TDataSource
+    DataSet = qrCodigo
+  end
+end

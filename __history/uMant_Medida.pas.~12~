@@ -1,0 +1,197 @@
+unit uMant_Medida;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uBase_Mantenimiento, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  Datasnap.Provider, Datasnap.DBClient, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Mask, Vcl.ExtCtrls;
+
+type
+  TfrMant_Medida = class(TfrBase_Mantenimiento)
+    edDocumento: TLabeledEdit;
+    FDQuery1id: TFDAutoIncField;
+    FDQuery1Nombre: TStringField;
+    FDQuery1Simbolo: TStringField;
+    procedure btnCancelarClick(Sender: TObject);
+    procedure edCodigoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure edCodigoKeyPress(Sender: TObject; var Key: Char);
+    procedure FDQuery1AfterOpen(DataSet: TDataSet);
+    procedure edCodigoMouseEnter(Sender: TObject);
+    procedure edCodigoMouseLeave(Sender: TObject);
+    procedure btnActualizarClick(Sender: TObject);
+
+  private
+    { Private declarations }
+    procedure IniPant;
+    procedure CargoConsulta;
+  public
+    { Public declarations }
+  end;
+
+var
+  frMant_Medida: TfrMant_Medida;
+
+implementation
+
+{$R *.dfm}
+uses udm,uAyuda,uMensage;
+{ TfrMant_Medida }
+
+procedure TfrMant_Medida.btnActualizarClick(Sender: TObject);
+var
+  lOk : Boolean;
+  nId : Integer;
+
+begin
+  inherited;
+
+  lOk := ValDato(edDocumento);
+
+
+ Screen.Cursor := crHourGlass;
+    TRY
+      udm.con.MySQL.StartTransaction;
+      TRY
+
+
+        with udm.con.FDCommand1 do
+        begin
+          if FDQuery1.IsEmpty then
+          begin
+            nId := ProxId('cliente');
+            CommandText.Text := 'Insert cliente ' +
+                                '(id,CI,Nombre,Apellido,Direccion,Ciudad,Telefono) ' +
+                                'Values ' +
+                                '(:paId,:paCi,:paNom,:paAp,:paDir,:paCiu,:paTel)';
+          end
+          else
+          begin
+            nId := qrCodigoid.AsInteger;
+            CommandText.Text := 'Update cliente ' +
+                                'Set CI = :paCi, ' +
+                                '    Nombre  = :paNom, ' +
+                                '    Apellido = :paAp,  ' +
+                                '    Direccion = :paDir,  ' +
+                                '    Ciudad = :paCiu,  ' +
+                                '    Telefono = :paTel  ' +
+                                'Where id = :paId';
+          end;
+
+          ParamByName('paId').Value := nId;
+          ParamByName('paCi').Value := edDocumento.Text;
+          ParamByName('paNom').Value := edNombre.Text;
+          ParamByName('paAp').Value := edApellido.Text;
+          ParamByName('paDir').Value := edDireccion.Text;
+          ParamByName('paCiu').Value := edCiudad.Text;
+          ParamByName('paTel').Value := edTelefono.Text;
+          Execute;
+
+        end;
+        udm.con.MySQL.Commit;
+        IniPant;
+        MsgAviso(self.Handle,'CLIENTE REGISTRADO');
+        HabMant(False);
+      EXCEPT
+        On E:Exception do
+        begin
+          udm.con.MySQL.Rollback;
+          MsgError(self.Handle,'NO SE PUDO GUARDAR EL CLIENTE.'+E.Message);
+        end;
+      END;
+    FINALLY
+      Screen.Cursor := crDefault;
+    END;
+end;
+
+procedure TfrMant_Medida.btnCancelarClick(Sender: TObject);
+begin
+  inherited;
+
+  IniPant;
+
+end;
+
+procedure TfrMant_Medida.CargoConsulta;
+begin
+
+  if edCodigo.Text<>'' then
+  begin
+    qrOpen(FDQuery1,edCodigo);
+  end
+  else
+    HabMant(True);
+
+end;
+
+
+procedure TfrMant_Medida.edCodigoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+
+  if key=112 then
+    Ayuda('medida',edCodigo);
+
+
+end;
+
+procedure TfrMant_Medida.edCodigoKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+
+  if key=#13 then
+  begin
+    CargoConsulta;
+  end;
+
+end;
+
+
+procedure TfrMant_Medida.edCodigoMouseEnter(Sender: TObject);
+begin
+  inherited;
+
+ pnAyuda.Visible:=True;
+
+end;
+
+
+procedure TfrMant_Medida.edCodigoMouseLeave(Sender: TObject);
+begin
+  inherited;
+
+   pnAyuda.Visible:=False;
+
+end;
+
+procedure TfrMant_Medida.FDQuery1AfterOpen(DataSet: TDataSet);
+begin
+  inherited;
+
+  if not FDQuery1.IsEmpty then
+  begin
+    edDocumento.Text := FDQuery1Nombre.AsString;
+    edDireccion.Text := FDQuery1Simbolo.AsString;
+  end
+  else
+    MsgAviso(self.Handle,'CODIGO SIN REGISTRAR');
+
+end;
+
+procedure TfrMant_Medida.IniPant;
+begin
+
+  FDQuery1.Close;
+  edDireccion.Clear;
+  edDocumento.Clear;
+  HabMant(False);
+  edCodigo.SetFocus;
+
+end;
+
+end.
